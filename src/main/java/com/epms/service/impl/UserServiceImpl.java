@@ -3,6 +3,10 @@ import com.epms.entity.User;
 import com.epms.repository.UserRepository;
 import com.epms.service.UserService;
 import org.springframework.stereotype.Service;
+import com.epms.dto.CreateUserRequest;
+import com.epms.dto.UpdateUserRequest;
+import com.epms.dto.UserResponse;
+import com.epms.util.UserMapper;
 
 import java.util.List;
 
@@ -14,45 +18,55 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User saveUser(User user) {
+    public UserResponse createUser(CreateUserRequest request) {
 
-        if (userRepository.existsByEmail(user.getEmail())) {
+        if (userRepository.existsByEmail(request.getEmail())) {
             throw new RuntimeException("Email already exists.");
         }
 
-        return userRepository.save(user);
+        User user = UserMapper.toEntity(request);
+
+        User savedUser = userRepository.save(user);
+
+        return UserMapper.toResponse(savedUser);
     }
 
     @Override
-    public List<User> getAllUsers() {
-        return userRepository.findAll();
+    public List<UserResponse> getAllUsers() {
+
+        return userRepository.findAll()
+                .stream()
+                .map(UserMapper::toResponse)
+                .toList();
     }
 
     @Override
-    public User getUserById(Long id) {
+    public UserResponse getUserById(Long id) {
 
-        return userRepository.findById(id)
+        User user = userRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("User not found."));
+
+        return UserMapper.toResponse(user);
     }
 
     @Override
-    public User updateUser(Long id, User user) {
+    public UserResponse updateUser(Long id, UpdateUserRequest request) {
 
-        User existingUser = getUserById(id);
+        User existingUser = userRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("User not found."));
 
-        existingUser.setFullName(user.getFullName());
-        existingUser.setEmail(user.getEmail());
-        existingUser.setPassword(user.getPassword());
-        existingUser.setPhone(user.getPhone());
-        existingUser.setRole(user.getRole());
+        UserMapper.updateEntity(existingUser, request);
 
-        return userRepository.save(existingUser);
+        User updatedUser = userRepository.save(existingUser);
+
+        return UserMapper.toResponse(updatedUser);
     }
 
     @Override
     public void deleteUser(Long id) {
 
-        User user = getUserById(id);
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("User not found."));
 
         userRepository.delete(user);
     }

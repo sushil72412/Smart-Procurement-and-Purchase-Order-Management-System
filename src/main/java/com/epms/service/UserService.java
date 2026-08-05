@@ -1,10 +1,20 @@
 package com.epms.service;
-import com.epms.entity.User;
+
+import com.epms.dto.CreateUserRequest;
+import com.epms.dto.UpdateUserRequest;
+import com.epms.dto.UserResponse;
+
 import java.util.List;
+
 public interface UserService {
-    User saveUser(User user);
-    List<User> getAllUsers();
-    User getUserById(Long id);
-    User updateUser(Long id, User user);
+
+    UserResponse createUser(CreateUserRequest request);
+
+    List<UserResponse> getAllUsers();
+
+    UserResponse getUserById(Long id);
+
+    UserResponse updateUser(Long id, UpdateUserRequest request);
+
     void deleteUser(Long id);
 }
