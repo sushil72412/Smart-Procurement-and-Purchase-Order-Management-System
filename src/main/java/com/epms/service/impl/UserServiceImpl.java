@@ -1,20 +1,27 @@
 package com.epms.service.impl;
-import com.epms.entity.User;
-import com.epms.repository.UserRepository;
-import com.epms.service.UserService;
-import org.springframework.stereotype.Service;
+
 import com.epms.dto.CreateUserRequest;
 import com.epms.dto.UpdateUserRequest;
 import com.epms.dto.UserResponse;
+import com.epms.entity.User;
+import com.epms.repository.UserRepository;
+import com.epms.service.UserService;
 import com.epms.util.UserMapper;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
 public class UserServiceImpl implements UserService {
+
     private final UserRepository userRepository;
-    public UserServiceImpl(UserRepository userRepository) {
+    private final PasswordEncoder passwordEncoder;
+
+    public UserServiceImpl(UserRepository userRepository,
+                           PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
@@ -24,10 +31,22 @@ public class UserServiceImpl implements UserService {
             throw new RuntimeException("Email already exists.");
         }
 
+        // Convert DTO to Entity
         User user = UserMapper.toEntity(request);
 
+        // Encrypt password
+        String encryptedPassword = passwordEncoder.encode(request.getPassword());
+
+        // Debug
+        System.out.println("Original Password : " + request.getPassword());
+        System.out.println("Encrypted Password: " + encryptedPassword);
+
+        user.setPassword(encryptedPassword);
+
+        // Save user
         User savedUser = userRepository.save(user);
 
+        // Return response
         return UserMapper.toResponse(savedUser);
     }
 
@@ -70,5 +89,4 @@ public class UserServiceImpl implements UserService {
 
         userRepository.delete(user);
     }
-
 }
