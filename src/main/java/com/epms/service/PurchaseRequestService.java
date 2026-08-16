@@ -7,11 +7,18 @@ import java.util.List;
 
 public interface PurchaseRequestService {
 
-    PurchaseRequestResponse createPurchaseRequest(CreatePurchaseRequest request);
+    PurchaseRequestResponse createPurchaseRequest(
+            CreatePurchaseRequest request
+    );
 
-    List<PurchaseRequestResponse> getAllRequests();
+    List<PurchaseRequestResponse> getAllPurchaseRequests();
 
-    PurchaseRequestResponse approveRequest(Long requestId);
+    PurchaseRequestResponse getPurchaseRequestById(
+            Long id
+    );
 
-    PurchaseRequestResponse rejectRequest(Long requestId);
+    PurchaseRequestResponse processRequest(
+            Long requestId,
+            String action
+    );
 }

@@ -3,7 +3,6 @@ package com.epms.config;
 import com.epms.security.JwtAuthenticationFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -19,7 +18,8 @@ public class SecurityConfig {
     public SecurityConfig(
             JwtAuthenticationFilter jwtAuthenticationFilter) {
 
-        this.jwtAuthenticationFilter = jwtAuthenticationFilter;
+        this.jwtAuthenticationFilter =
+                jwtAuthenticationFilter;
     }
 
     @Bean
@@ -33,47 +33,72 @@ public class SecurityConfig {
 
         http
 
-                // Disable CSRF because this is a REST API
+                // REST API - CSRF disabled
                 .csrf(csrf -> csrf.disable())
 
-                // JWT based authentication
+                // JWT authentication is stateless
                 .sessionManagement(session ->
                         session.sessionCreationPolicy(
                                 SessionCreationPolicy.STATELESS
                         )
                 )
 
-                // Authorization rules
                 .authorizeHttpRequests(auth -> auth
 
-                        // Login doesn't require JWT
+                        // Login
                         .requestMatchers("/api/auth/**")
                         .permitAll()
 
-                        // Only ADMIN can manage users
+                        // User management
                         .requestMatchers("/api/users/**")
                         .hasRole("ADMIN")
 
-                        // ADMIN and MANAGER can access products
+                        // Product management/access
                         .requestMatchers("/api/products/**")
-                        .hasAnyRole("ADMIN", "MANAGER")
+                        .hasAnyRole(
+                                "ADMIN",
+                                "MANAGER"
+                        )
 
-                        // Employees and managers can access purchase requests
-                        .requestMatchers("/api/purchase-requests/**")
-                        .hasAnyRole("EMPLOYEE", "MANAGER")
+                        // Purchase requests
+                        .requestMatchers(
+                                "/api/purchase-requests/**"
+                        )
+                        .hasAnyRole(
+                                "ADMIN",
+                                "MANAGER",
+                                "EMPLOYEE"
+                        )
 
-                        // Everything else requires authentication
+                        // Supplier management
+                        .requestMatchers("/api/suppliers/**")
+                        .hasAnyRole(
+                                "ADMIN",
+                                "MANAGER",
+                                "SUPPLIER"
+                        )
+
+                        // Delivery management
+                        .requestMatchers("/api/deliveries/**")
+                        .hasAnyRole(
+                                "ADMIN",
+                                "MANAGER",
+                                "EMPLOYEE",
+                                "SUPPLIER"
+                        )
+
+                        // Everything else
                         .anyRequest()
                         .authenticated()
                 )
 
-                // Add JWT filter before Spring's username/password filter
+                // JWT filter
                 .addFilterBefore(
                         jwtAuthenticationFilter,
                         UsernamePasswordAuthenticationFilter.class
                 )
 
-                // Keep HTTP Basic disabled
+                // HTTP Basic disabled
                 .httpBasic(httpBasic -> {});
 
         return http.build();

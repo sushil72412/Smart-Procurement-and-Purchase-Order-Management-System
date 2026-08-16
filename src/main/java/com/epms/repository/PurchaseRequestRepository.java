@@ -13,4 +13,6 @@ public interface PurchaseRequestRepository extends JpaRepository<PurchaseRequest
 
     List<PurchaseRequest> findByUser(User user);
 
+    List<PurchaseRequest> findByUserId(Long userId);
+
 }

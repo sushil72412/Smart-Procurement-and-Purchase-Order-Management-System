@@ -1,0 +1,467 @@
+package com.epms.service.impl;
+
+import com.epms.dto.PaymentRequest;
+import com.epms.dto.PaymentResponse;
+import com.epms.entity.Payment;
+import com.epms.entity.Product;
+import com.epms.entity.PurchaseRequest;
+import com.epms.entity.PurchaseRequestItem;
+import com.epms.entity.User;
+import com.epms.enums.PaymentStatus;
+import com.epms.enums.PurchaseStatus;
+import com.epms.repository.PaymentRepository;
+import com.epms.repository.PurchaseRequestRepository;
+import com.epms.repository.UserRepository;
+import com.epms.service.PaymentService;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.stereotype.Service;
+
+import java.math.BigDecimal;
+import java.util.List;
+
+@Service
+public class PaymentServiceImpl
+        implements PaymentService {
+
+    private final PaymentRepository paymentRepository;
+
+    private final PurchaseRequestRepository
+            purchaseRequestRepository;
+
+    private final UserRepository userRepository;
+
+
+    public PaymentServiceImpl(
+            PaymentRepository paymentRepository,
+            PurchaseRequestRepository
+                    purchaseRequestRepository,
+            UserRepository userRepository) {
+
+        this.paymentRepository =
+                paymentRepository;
+
+        this.purchaseRequestRepository =
+                purchaseRequestRepository;
+
+        this.userRepository =
+                userRepository;
+    }
+
+
+    // =========================================================
+    // CREATE PAYMENT
+    // =========================================================
+
+    @Override
+    public PaymentResponse createPayment(
+            PaymentRequest request) {
+
+        // -----------------------------------------------------
+        // 1. Find Purchase Request
+        // -----------------------------------------------------
+
+        PurchaseRequest purchaseRequest =
+                purchaseRequestRepository
+                        .findById(
+                                request.getPurchaseRequestId()
+                        )
+                        .orElseThrow(() ->
+                                new RuntimeException(
+                                        "Purchase Request not found."
+                                )
+                        );
+
+
+        // -----------------------------------------------------
+        // 2. Check current user
+        // -----------------------------------------------------
+
+        User currentUser =
+                getCurrentUser();
+
+
+        // -----------------------------------------------------
+        // 3. Employee can pay only their own request
+        // -----------------------------------------------------
+
+        if (!purchaseRequest
+                .getUser()
+                .getId()
+                .equals(currentUser.getId())) {
+
+            throw new RuntimeException(
+                    "You are not allowed to make payment "
+                            + "for this purchase request."
+            );
+        }
+
+
+        // -----------------------------------------------------
+        // 4. Purchase Request must be APPROVED
+        // -----------------------------------------------------
+
+        if (purchaseRequest.getStatus()
+                != PurchaseStatus.APPROVED) {
+
+            throw new RuntimeException(
+                    "Payment is allowed only for "
+                            + "APPROVED purchase requests."
+            );
+        }
+
+
+        // -----------------------------------------------------
+        // 5. Check duplicate payment
+        // -----------------------------------------------------
+
+        if (paymentRepository
+                .existsByPurchaseRequestId(
+                        purchaseRequest.getId()
+                )) {
+
+            throw new RuntimeException(
+                    "Payment already exists for "
+                            + "this purchase request."
+            );
+        }
+
+
+        // -----------------------------------------------------
+        // 6. Calculate total amount
+        // -----------------------------------------------------
+
+        BigDecimal totalAmount =
+                calculateTotalAmount(
+                        purchaseRequest
+                );
+
+
+        // -----------------------------------------------------
+        // 7. Create Payment
+        // -----------------------------------------------------
+
+        Payment payment =
+                new Payment();
+
+        payment.setPurchaseRequest(
+                purchaseRequest
+        );
+
+        payment.setAmount(
+                totalAmount
+        );
+
+        payment.setStatus(
+                PaymentStatus.PENDING
+        );
+
+        payment.setPaymentMethod(
+                request.getPaymentMethod()
+        );
+
+
+        // Transaction ID will be generated by
+        // actual payment gateway later.
+        payment.setTransactionId(null);
+
+
+        // -----------------------------------------------------
+        // 8. Save Payment
+        // -----------------------------------------------------
+
+        Payment savedPayment =
+                paymentRepository.save(payment);
+
+
+        // -----------------------------------------------------
+        // 9. Return response
+        // -----------------------------------------------------
+
+        return convertToResponse(
+                savedPayment
+        );
+    }
+
+
+    // =========================================================
+    // GET PAYMENT BY ID
+    // =========================================================
+
+    @Override
+    public PaymentResponse getPaymentById(
+            Long id) {
+
+        Payment payment =
+                paymentRepository
+                        .findById(id)
+                        .orElseThrow(() ->
+                                new RuntimeException(
+                                        "Payment not found."
+                                )
+                        );
+
+        validatePaymentAccess(payment);
+
+        return convertToResponse(payment);
+    }
+
+
+    // =========================================================
+    // GET PAYMENT BY PURCHASE REQUEST ID
+    // =========================================================
+
+    @Override
+    public PaymentResponse
+    getPaymentByPurchaseRequestId(
+            Long purchaseRequestId) {
+
+        Payment payment =
+                paymentRepository
+                        .findByPurchaseRequestId(
+                                purchaseRequestId
+                        )
+                        .orElseThrow(() ->
+                                new RuntimeException(
+                                        "Payment not found for "
+                                                + "this purchase request."
+                                )
+                        );
+
+        validatePaymentAccess(payment);
+
+        return convertToResponse(payment);
+    }
+
+
+    // =========================================================
+    // GET ALL PAYMENTS
+    // =========================================================
+
+    @Override
+    public List<PaymentResponse>
+    getAllPayments() {
+
+        User currentUser =
+                getCurrentUser();
+
+        String role =
+                currentUser.getRole().name();
+
+
+        // -----------------------------------------------------
+        // ADMIN / MANAGER
+        // -----------------------------------------------------
+
+        if (role.equals("ADMIN") ||
+                role.equals("MANAGER")) {
+
+            return paymentRepository
+                    .findAll()
+                    .stream()
+                    .map(this::convertToResponse)
+                    .toList();
+        }
+
+
+        // -----------------------------------------------------
+        // EMPLOYEE
+        // -----------------------------------------------------
+
+        return paymentRepository
+                .findAll()
+                .stream()
+                .filter(payment ->
+                        payment
+                                .getPurchaseRequest()
+                                .getUser()
+                                .getId()
+                                .equals(
+                                        currentUser.getId()
+                                )
+                )
+                .map(this::convertToResponse)
+                .toList();
+    }
+
+
+    // =========================================================
+    // CALCULATE TOTAL AMOUNT
+    // =========================================================
+
+    private BigDecimal calculateTotalAmount(
+            PurchaseRequest purchaseRequest) {
+
+        BigDecimal total =
+                BigDecimal.ZERO;
+
+
+        for (PurchaseRequestItem item :
+                purchaseRequest.getItems()) {
+
+            Product product =
+                    item.getProduct();
+
+
+            if (product == null) {
+
+                throw new RuntimeException(
+                        "Product not found for "
+                                + "purchase request item."
+                );
+            }
+
+
+            if (product.getPrice() == null) {
+
+                throw new RuntimeException(
+                        "Product price is missing."
+                );
+            }
+
+
+            if (item.getQuantity() == null ||
+                    item.getQuantity() <= 0) {
+
+                throw new RuntimeException(
+                        "Invalid product quantity."
+                );
+            }
+
+
+            BigDecimal itemTotal =
+                    product.getPrice()
+                            .multiply(
+                                    BigDecimal.valueOf(
+                                            item.getQuantity()
+                                    )
+                            );
+
+
+            total =
+                    total.add(itemTotal);
+        }
+
+
+        if (total.compareTo(
+                BigDecimal.ZERO
+        ) <= 0) {
+
+            throw new RuntimeException(
+                    "Payment amount must be greater than zero."
+            );
+        }
+
+
+        return total;
+    }
+
+
+    // =========================================================
+    // GET CURRENT USER
+    // =========================================================
+
+    private User getCurrentUser() {
+
+        Authentication authentication =
+                SecurityContextHolder
+                        .getContext()
+                        .getAuthentication();
+
+
+        if (authentication == null ||
+                !authentication.isAuthenticated()) {
+
+            throw new RuntimeException(
+                    "User is not authenticated."
+            );
+        }
+
+
+        String email =
+                authentication.getName();
+
+
+        return userRepository
+                .findByEmail(email)
+                .orElseThrow(() ->
+                        new RuntimeException(
+                                "Current user not found."
+                        )
+                );
+    }
+
+
+    // =========================================================
+    // VALIDATE PAYMENT ACCESS
+    // =========================================================
+
+    private void validatePaymentAccess(
+            Payment payment) {
+
+        User currentUser =
+                getCurrentUser();
+
+
+        String role =
+                currentUser.getRole().name();
+
+
+        // ADMIN can access everything
+        if (role.equals("ADMIN")) {
+            return;
+        }
+
+
+        // MANAGER can access everything
+        if (role.equals("MANAGER")) {
+            return;
+        }
+
+
+        // EMPLOYEE can access only own payment
+        if (!payment
+                .getPurchaseRequest()
+                .getUser()
+                .getId()
+                .equals(
+                        currentUser.getId()
+                )) {
+
+            throw new RuntimeException(
+                    "You are not allowed to access "
+                            + "this payment."
+            );
+        }
+    }
+
+
+    // =========================================================
+    // CONVERT ENTITY → RESPONSE
+    // =========================================================
+
+    private PaymentResponse convertToResponse(
+            Payment payment) {
+
+        return new PaymentResponse(
+
+                payment.getId(),
+
+                payment
+                        .getPurchaseRequest()
+                        .getId(),
+
+                payment.getAmount(),
+
+                payment.getStatus(),
+
+                payment.getPaymentMethod(),
+
+                payment.getTransactionId(),
+
+                payment.getCreatedAt(),
+
+                payment.getUpdatedAt()
+        );
+    }
+}
