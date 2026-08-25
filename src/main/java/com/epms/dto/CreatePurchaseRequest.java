@@ -15,13 +15,21 @@ public class CreatePurchaseRequest {
     @NotEmpty(message = "At least one product is required")
     private List<CreatePurchaseRequestItem> items;
 
+    @Valid
+    @NotNull(message = "Delivery address is required")
+    private CreateDeliveryAddressRequest deliveryAddress;
+
     public CreatePurchaseRequest() {
     }
 
-    public CreatePurchaseRequest(Long userId,
-                                 List<CreatePurchaseRequestItem> items) {
+    public CreatePurchaseRequest(
+            Long userId,
+            List<CreatePurchaseRequestItem> items,
+            CreateDeliveryAddressRequest deliveryAddress) {
+
         this.userId = userId;
         this.items = items;
+        this.deliveryAddress = deliveryAddress;
     }
 
     public Long getUserId() {
@@ -36,7 +44,19 @@ public class CreatePurchaseRequest {
         return items;
     }
 
-    public void setItems(List<CreatePurchaseRequestItem> items) {
+    public void setItems(
+            List<CreatePurchaseRequestItem> items) {
+
         this.items = items;
+    }
+
+    public CreateDeliveryAddressRequest getDeliveryAddress() {
+        return deliveryAddress;
+    }
+
+    public void setDeliveryAddress(
+            CreateDeliveryAddressRequest deliveryAddress) {
+
+        this.deliveryAddress = deliveryAddress;
     }
 }

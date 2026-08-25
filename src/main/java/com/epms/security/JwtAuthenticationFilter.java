@@ -4,6 +4,7 @@ import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -14,11 +15,14 @@ import java.io.IOException;
 import java.util.Collections;
 
 @Component
-public class JwtAuthenticationFilter extends OncePerRequestFilter {
+public class JwtAuthenticationFilter
+        extends OncePerRequestFilter {
 
     private final JwtUtil jwtUtil;
 
-    public JwtAuthenticationFilter(JwtUtil jwtUtil) {
+    public JwtAuthenticationFilter(
+            JwtUtil jwtUtil) {
+
         this.jwtUtil = jwtUtil;
     }
 
@@ -32,11 +36,15 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         String authorizationHeader =
                 request.getHeader("Authorization");
 
-        // Check whether Authorization header exists
-        if (authorizationHeader == null ||
-                !authorizationHeader.startsWith("Bearer ")) {
+        // Check Authorization header
+        if (authorizationHeader == null
+                || !authorizationHeader.startsWith("Bearer ")) {
 
-            filterChain.doFilter(request, response);
+            filterChain.doFilter(
+                    request,
+                    response
+            );
+
             return;
         }
 
@@ -47,31 +55,51 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         // Validate JWT
         if (jwtUtil.validateToken(token)) {
 
-            String email =
-                    jwtUtil.extractEmail(token);
+            try {
 
-            String role =
-                    jwtUtil.extractRole(token);
+                // Extract email
+                String email =
+                        jwtUtil.extractEmail(token);
 
-            // Convert role to Spring Security authority
-            SimpleGrantedAuthority authority =
-                    new SimpleGrantedAuthority(
-                            "ROLE_" + role
-                    );
+                // Extract role
+                String role =
+                        jwtUtil.extractRole(token);
 
-            UsernamePasswordAuthenticationToken authentication =
-                    new UsernamePasswordAuthenticationToken(
-                            email,
-                            null,
-                            Collections.singletonList(authority)
-                    );
+                // Create authority
+                SimpleGrantedAuthority authority =
+                        new SimpleGrantedAuthority(
+                                "ROLE_" + role
+                        );
 
-            // Store authentication
-            SecurityContextHolder
-                    .getContext()
-                    .setAuthentication(authentication);
+                // Create authentication
+                UsernamePasswordAuthenticationToken authentication =
+                        new UsernamePasswordAuthenticationToken(
+                                email,
+                                null,
+                                Collections.singletonList(
+                                        authority
+                                )
+                        );
+
+                // Set authentication
+                SecurityContextHolder
+                        .getContext()
+                        .setAuthentication(
+                                authentication
+                        );
+
+            } catch (Exception e) {
+
+                // Invalid JWT claims
+                SecurityContextHolder
+                        .clearContext();
+            }
         }
 
-        filterChain.doFilter(request, response);
+        // Continue filter chain
+        filterChain.doFilter(
+                request,
+                response
+        );
     }
 }

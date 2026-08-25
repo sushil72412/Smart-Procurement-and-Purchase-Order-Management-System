@@ -33,6 +33,9 @@ public class DeliveryResponse {
 
     private LocalDateTime updatedAt;
 
+    // Delivery address
+    private DeliveryAddressResponse deliveryAddress;
+
     public DeliveryResponse() {
     }
 
@@ -49,7 +52,8 @@ public class DeliveryResponse {
             LocalDateTime outForDeliveryAt,
             LocalDateTime deliveredAt,
             LocalDateTime createdAt,
-            LocalDateTime updatedAt) {
+            LocalDateTime updatedAt,
+            DeliveryAddressResponse deliveryAddress) {
 
         this.id = id;
         this.purchaseRequestId = purchaseRequestId;
@@ -64,6 +68,7 @@ public class DeliveryResponse {
         this.deliveredAt = deliveredAt;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
+        this.deliveryAddress = deliveryAddress;
     }
 
     public Long getId() {
@@ -128,6 +133,7 @@ public class DeliveryResponse {
 
     public void setEstimatedDeliveryDate(
             LocalDate estimatedDeliveryDate) {
+
         this.estimatedDeliveryDate = estimatedDeliveryDate;
     }
 
@@ -145,6 +151,7 @@ public class DeliveryResponse {
 
     public void setOutForDeliveryAt(
             LocalDateTime outForDeliveryAt) {
+
         this.outForDeliveryAt = outForDeliveryAt;
     }
 
@@ -152,7 +159,9 @@ public class DeliveryResponse {
         return deliveredAt;
     }
 
-    public void setDeliveredAt(LocalDateTime deliveredAt) {
+    public void setDeliveredAt(
+            LocalDateTime deliveredAt) {
+
         this.deliveredAt = deliveredAt;
     }
 
@@ -160,7 +169,9 @@ public class DeliveryResponse {
         return createdAt;
     }
 
-    public void setCreatedAt(LocalDateTime createdAt) {
+    public void setCreatedAt(
+            LocalDateTime createdAt) {
+
         this.createdAt = createdAt;
     }
 
@@ -168,7 +179,19 @@ public class DeliveryResponse {
         return updatedAt;
     }
 
-    public void setUpdatedAt(LocalDateTime updatedAt) {
+    public void setUpdatedAt(
+            LocalDateTime updatedAt) {
+
         this.updatedAt = updatedAt;
+    }
+
+    public DeliveryAddressResponse getDeliveryAddress() {
+        return deliveryAddress;
+    }
+
+    public void setDeliveryAddress(
+            DeliveryAddressResponse deliveryAddress) {
+
+        this.deliveryAddress = deliveryAddress;
     }
 }

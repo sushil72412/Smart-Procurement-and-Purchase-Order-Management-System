@@ -3,6 +3,7 @@ package com.epms.config;
 import com.epms.security.JwtAuthenticationFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -22,10 +23,19 @@ public class SecurityConfig {
                 jwtAuthenticationFilter;
     }
 
+    // =========================================================
+    // PASSWORD ENCODER
+    // =========================================================
+
     @Bean
     public PasswordEncoder passwordEncoder() {
+
         return new BCryptPasswordEncoder();
     }
+
+    // =========================================================
+    // SECURITY FILTER CHAIN
+    // =========================================================
 
     @Bean
     public SecurityFilterChain securityFilterChain(
@@ -33,34 +43,62 @@ public class SecurityConfig {
 
         http
 
-                // REST API - CSRF disabled
+                // -------------------------------------------------
+                // CSRF
+                // -------------------------------------------------
                 .csrf(csrf -> csrf.disable())
 
-                // JWT authentication is stateless
+                // -------------------------------------------------
+                // STATELESS SESSION
+                // -------------------------------------------------
                 .sessionManagement(session ->
                         session.sessionCreationPolicy(
                                 SessionCreationPolicy.STATELESS
                         )
                 )
 
+                // -------------------------------------------------
+                // AUTHORIZATION RULES
+                // -------------------------------------------------
                 .authorizeHttpRequests(auth -> auth
 
-                        // Login
-                        .requestMatchers("/api/auth/**")
+                        // =========================================
+                        // AUTHENTICATION
+                        // =========================================
+
+                        .requestMatchers(
+                                "/api/auth/**"
+                        )
                         .permitAll()
 
-                        // User management
-                        .requestMatchers("/api/users/**")
+
+                        // =========================================
+                        // USER MANAGEMENT
+                        // =========================================
+
+                        .requestMatchers(
+                                "/api/users/**"
+                        )
                         .hasRole("ADMIN")
 
-                        // Product management/access
-                        .requestMatchers("/api/products/**")
+
+                        // =========================================
+                        // PRODUCT MANAGEMENT
+                        // =========================================
+
+                        .requestMatchers(
+                                "/api/products/**"
+                        )
                         .hasAnyRole(
                                 "ADMIN",
                                 "MANAGER"
                         )
 
-                        // Purchase requests
+
+                        // =========================================
+                        // PURCHASE REQUESTS
+                        // =========================================
+
                         .requestMatchers(
                                 "/api/purchase-requests/**"
                         )
@@ -70,16 +108,28 @@ public class SecurityConfig {
                                 "EMPLOYEE"
                         )
 
-                        // Supplier management
-                        .requestMatchers("/api/suppliers/**")
+
+                        // =========================================
+                        // SUPPLIERS
+                        // =========================================
+
+                        .requestMatchers(
+                                "/api/suppliers/**"
+                        )
                         .hasAnyRole(
                                 "ADMIN",
                                 "MANAGER",
                                 "SUPPLIER"
                         )
 
-                        // Delivery management
-                        .requestMatchers("/api/deliveries/**")
+
+                        // =========================================
+                        // DELIVERIES
+                        // =========================================
+
+                        .requestMatchers(
+                                "/api/deliveries/**"
+                        )
                         .hasAnyRole(
                                 "ADMIN",
                                 "MANAGER",
@@ -87,19 +137,43 @@ public class SecurityConfig {
                                 "SUPPLIER"
                         )
 
-                        // Everything else
+
+                        // =========================================
+                        // CREATE RATING
+                        // EMPLOYEE ONLY
+                        // =========================================
+
+                        .requestMatchers(
+                                HttpMethod.POST,
+                                "/api/ratings"
+                        )
+                        .hasRole("EMPLOYEE")
+
+
+                        // =========================================
+                        // EVERYTHING ELSE
+                        // =========================================
+
                         .anyRequest()
                         .authenticated()
                 )
 
-                // JWT filter
+                // -------------------------------------------------
+                // JWT FILTER
+                // -------------------------------------------------
+
                 .addFilterBefore(
                         jwtAuthenticationFilter,
                         UsernamePasswordAuthenticationFilter.class
                 )
 
-                // HTTP Basic disabled
-                .httpBasic(httpBasic -> {});
+                // -------------------------------------------------
+                // HTTP BASIC DISABLED
+                // -------------------------------------------------
+
+                .httpBasic(
+                        httpBasic -> httpBasic.disable()
+                );
 
         return http.build();
     }

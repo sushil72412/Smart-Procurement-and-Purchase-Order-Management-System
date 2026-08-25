@@ -28,6 +28,19 @@ public class PurchaseRequest {
     )
     private List<PurchaseRequestItem> items = new ArrayList<>();
 
+    // Delivery address for this purchase request
+    @OneToOne(
+            cascade = CascadeType.ALL,
+            orphanRemoval = true,
+            optional = false
+    )
+    @JoinColumn(
+            name = "delivery_address_id",
+            nullable = false,
+            unique = true
+    )
+    private DeliveryAddress deliveryAddress;
+
     @Enumerated(EnumType.STRING)
     private PurchaseStatus status;
 
@@ -38,6 +51,7 @@ public class PurchaseRequest {
 
     @PrePersist
     public void onCreate() {
+
         requestDate = LocalDateTime.now();
 
         if (status == null) {
@@ -63,6 +77,16 @@ public class PurchaseRequest {
 
     public void setItems(List<PurchaseRequestItem> items) {
         this.items = items;
+    }
+
+    public DeliveryAddress getDeliveryAddress() {
+        return deliveryAddress;
+    }
+
+    public void setDeliveryAddress(
+            DeliveryAddress deliveryAddress) {
+
+        this.deliveryAddress = deliveryAddress;
     }
 
     public PurchaseStatus getStatus() {

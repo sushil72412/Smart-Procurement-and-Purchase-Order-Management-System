@@ -1,9 +1,11 @@
 package com.epms.service.impl;
 
+import com.epms.dto.DeliveryAddressResponse;
 import com.epms.dto.CreateDeliveryRequest;
 import com.epms.dto.DeliveryResponse;
 import com.epms.dto.DeliveryStatusUpdateRequest;
 import com.epms.entity.Delivery;
+import com.epms.entity.DeliveryAddress;
 import com.epms.entity.PurchaseRequest;
 import com.epms.entity.Supplier;
 import com.epms.entity.User;
@@ -329,6 +331,29 @@ public class DeliveryServiceImpl implements DeliveryService {
         User supplierUser =
                 supplier.getUser();
 
+        // Get delivery address from purchase request
+        DeliveryAddress address =
+                delivery.getPurchaseRequest()
+                        .getDeliveryAddress();
+
+        DeliveryAddressResponse deliveryAddressResponse = null;
+
+        if (address != null) {
+
+            deliveryAddressResponse =
+                    new DeliveryAddressResponse(
+                            address.getId(),
+                            address.getRecipientName(),
+                            address.getPhone(),
+                            address.getAddressLine1(),
+                            address.getAddressLine2(),
+                            address.getCity(),
+                            address.getState(),
+                            address.getPostalCode(),
+                            address.getCountry()
+                    );
+        }
+
         return new DeliveryResponse(
                 delivery.getId(),
                 delivery.getPurchaseRequest().getId(),
@@ -342,7 +367,8 @@ public class DeliveryServiceImpl implements DeliveryService {
                 delivery.getOutForDeliveryAt(),
                 delivery.getDeliveredAt(),
                 delivery.getCreatedAt(),
-                delivery.getUpdatedAt()
+                delivery.getUpdatedAt(),
+                deliveryAddressResponse
         );
     }
 }

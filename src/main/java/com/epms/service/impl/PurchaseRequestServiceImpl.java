@@ -3,6 +3,7 @@ package com.epms.service.impl;
 import com.epms.dto.CreatePurchaseRequest;
 import com.epms.dto.CreatePurchaseRequestItem;
 import com.epms.dto.PurchaseRequestResponse;
+import com.epms.entity.DeliveryAddress;
 import com.epms.entity.Product;
 import com.epms.entity.PurchaseRequest;
 import com.epms.entity.PurchaseRequestItem;
@@ -82,6 +83,46 @@ public class PurchaseRequestServiceImpl
                 PurchaseStatus.PENDING
         );
 
+        // =====================================================
+        // CREATE DELIVERY ADDRESS
+        // =====================================================
+
+        DeliveryAddress address =
+                new DeliveryAddress();
+
+        address.setRecipientName(
+                request.getDeliveryAddress().getRecipientName()
+        );
+
+        address.setPhone(
+                request.getDeliveryAddress().getPhone()
+        );
+
+        address.setAddressLine1(
+                request.getDeliveryAddress().getAddressLine1()
+        );
+
+        address.setAddressLine2(
+                request.getDeliveryAddress().getAddressLine2()
+        );
+
+        address.setCity(
+                request.getDeliveryAddress().getCity()
+        );
+
+        address.setState(
+                request.getDeliveryAddress().getState()
+        );
+
+        address.setPostalCode(
+                request.getDeliveryAddress().getPostalCode()
+        );
+
+        address.setCountry(
+                request.getDeliveryAddress().getCountry()
+        );
+
+        purchaseRequest.setDeliveryAddress(address);
 
         // =====================================================
         // CREATE PURCHASE REQUEST ITEMS

@@ -17,19 +17,25 @@ public class PurchaseRequestResponse {
 
     private List<PurchaseRequestItemResponse> items;
 
+    private DeliveryAddressResponse deliveryAddress;
+
     public PurchaseRequestResponse() {
     }
 
-    public PurchaseRequestResponse(Long id,
-                                   String employeeName,
-                                   PurchaseStatus status,
-                                   LocalDateTime requestDate,
-                                   List<PurchaseRequestItemResponse> items) {
+    public PurchaseRequestResponse(
+            Long id,
+            String employeeName,
+            PurchaseStatus status,
+            LocalDateTime requestDate,
+            List<PurchaseRequestItemResponse> items,
+            DeliveryAddressResponse deliveryAddress) {
+
         this.id = id;
         this.employeeName = employeeName;
         this.status = status;
         this.requestDate = requestDate;
         this.items = items;
+        this.deliveryAddress = deliveryAddress;
     }
 
     public Long getId() {
@@ -68,7 +74,19 @@ public class PurchaseRequestResponse {
         return items;
     }
 
-    public void setItems(List<PurchaseRequestItemResponse> items) {
+    public void setItems(
+            List<PurchaseRequestItemResponse> items) {
+
         this.items = items;
+    }
+
+    public DeliveryAddressResponse getDeliveryAddress() {
+        return deliveryAddress;
+    }
+
+    public void setDeliveryAddress(
+            DeliveryAddressResponse deliveryAddress) {
+
+        this.deliveryAddress = deliveryAddress;
     }
 }
