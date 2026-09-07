@@ -85,15 +85,47 @@ public class SecurityConfig {
                         // =========================================
                         // PRODUCT MANAGEMENT
                         // =========================================
+                                // View products
+                                .requestMatchers(
+                                        HttpMethod.GET,
+                                        "/api/products/**"
+                                )
+                                .hasAnyRole(
+                                        "ADMIN",
+                                        "MANAGER",
+                                        "EMPLOYEE",
+                                        "SUPPLIER"
+                                )
 
-                        .requestMatchers(
-                                "/api/products/**"
-                        )
-                        .hasAnyRole(
-                                "ADMIN",
-                                "MANAGER"
-                        )
+// Create products
+                                .requestMatchers(
+                                        HttpMethod.POST,
+                                        "/api/products/**"
+                                )
+                                .hasAnyRole(
+                                        "ADMIN",
+                                        "MANAGER"
+                                )
 
+// Update products
+                                .requestMatchers(
+                                        HttpMethod.PUT,
+                                        "/api/products/**"
+                                )
+                                .hasAnyRole(
+                                        "ADMIN",
+                                        "MANAGER"
+                                )
+
+// Delete products
+                                .requestMatchers(
+                                        HttpMethod.DELETE,
+                                        "/api/products/**"
+                                )
+                                .hasAnyRole(
+                                        "ADMIN",
+                                        "MANAGER"
+                                )
 
                         // =========================================
                         // PURCHASE REQUESTS

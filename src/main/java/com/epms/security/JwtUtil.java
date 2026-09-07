@@ -29,11 +29,13 @@ public class JwtUtil {
     // =========================================================
 
     public String generateToken(
+            Long userId,
             String email,
             Role role) {
 
         return Jwts.builder()
                 .subject(email)
+                .claim("userId", userId)
                 .claim("role", role.name())
                 .issuedAt(new Date())
                 .expiration(

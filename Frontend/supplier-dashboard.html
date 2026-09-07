@@ -1,0 +1,692 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Supplier Dashboard - EPMS</title>
+
+    <link rel="stylesheet"
+          href="css/supplier-dashboard.css">
+
+</head>
+
+
+<body>
+
+<div class="dashboard-container">
+
+
+    <!-- =====================================================
+         SIDEBAR
+         ===================================================== -->
+
+    <aside class="sidebar">
+
+        <!-- LOGO -->
+
+        <div class="logo">
+
+            <h2>EPMS</h2>
+
+            <span>
+                Procurement System
+            </span>
+
+        </div>
+
+
+        <!-- NAVIGATION -->
+
+        <nav class="sidebar-nav">
+
+            <a href="#"
+               class="nav-item active">
+
+                <span class="nav-icon">
+                    ▦
+                </span>
+
+                Dashboard
+
+            </a>
+
+
+            <a href="#"
+               class="nav-item">
+
+                <span class="nav-icon">
+                    📦
+                </span>
+
+                Orders
+
+            </a>
+
+
+            <a href="#"
+               class="nav-item">
+
+                <span class="nav-icon">
+                    🚚
+                </span>
+
+                Shipments
+
+            </a>
+
+
+            <a href="#"
+               class="nav-item">
+
+                <span class="nav-icon">
+                    💳
+                </span>
+
+                Payments
+
+            </a>
+
+
+            <a href="#"
+               class="nav-item">
+
+                <span class="nav-icon">
+                    📊
+                </span>
+
+                Reports
+
+            </a>
+
+        </nav>
+
+
+        <!-- USER CARD -->
+
+        <div class="user-card">
+
+            <div class="user-avatar"
+                 id="supplierAvatar">
+
+                S
+
+            </div>
+
+
+            <div class="user-info">
+
+                <strong id="supplierName">
+                    Supplier
+                </strong>
+
+                <span id="supplierEmail">
+                    supplier@email.com
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <!-- LOGOUT -->
+
+        <button
+            type="button"
+            id="logoutBtn"
+            class="logout-btn">
+
+            Logout
+
+        </button>
+
+    </aside>
+
+
+
+    <!-- =====================================================
+         MAIN CONTENT
+         ===================================================== -->
+
+    <main class="main-content">
+
+
+        <!-- =================================================
+             TOPBAR
+             ================================================= -->
+
+        <header class="topbar">
+
+            <div>
+
+                <h1>
+                    Supplier Dashboard
+                </h1>
+
+                <p id="currentStatus">
+                    Supplier procurement overview
+                </p>
+
+            </div>
+
+
+            <div class="topbar-user">
+
+                <span class="role-badge">
+                    SUPPLIER
+                </span>
+
+            </div>
+
+        </header>
+
+
+
+        <!-- =================================================
+             WELCOME SECTION
+             ================================================= -->
+
+        <section class="welcome-section">
+
+            <div>
+
+                <h2>
+                    Welcome back,
+                    <span id="welcomeSupplierName">
+                        Supplier
+                    </span>
+                    👋
+                </h2>
+
+
+                <p>
+                    Manage your assigned orders and
+                    update shipment progress.
+                </p>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =================================================
+             SUMMARY CARDS
+             ================================================= -->
+
+        <section class="summary-grid">
+
+
+            <!-- TOTAL ORDERS -->
+
+            <div class="summary-card">
+
+                <div class="summary-icon">
+                    📦
+                </div>
+
+
+                <div class="summary-content">
+
+                    <span>
+                        Total Orders
+                    </span>
+
+                    <strong id="totalOrders">
+                        0
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- ACTIVE ORDERS -->
+
+            <div class="summary-card">
+
+                <div class="summary-icon">
+                    🔄
+                </div>
+
+
+                <div class="summary-content">
+
+                    <span>
+                        Active Orders
+                    </span>
+
+                    <strong id="activeOrders">
+                        0
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- READY TO SHIP -->
+
+            <div class="summary-card">
+
+                <div class="summary-icon">
+                    🚚
+                </div>
+
+
+                <div class="summary-content">
+
+                    <span>
+                        Ready to Ship
+                    </span>
+
+                    <strong id="readyToShip">
+                        0
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- DELIVERED -->
+
+            <div class="summary-card">
+
+                <div class="summary-icon">
+                    ✅
+                </div>
+
+
+                <div class="summary-content">
+
+                    <span>
+                        Delivered
+                    </span>
+
+                    <strong id="deliveredOrders">
+                        0
+                    </strong>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =================================================
+             DASHBOARD GRID
+             ================================================= -->
+
+        <section class="dashboard-grid">
+
+
+            <!-- =================================================
+                 ORDERS SECTION
+                 ================================================= -->
+
+            <div class="orders-section">
+
+
+                <div class="section-header">
+
+                    <div>
+
+                        <h2>
+                            Assigned Orders
+                        </h2>
+
+                        <p>
+                            Orders assigned to your supplier account.
+                        </p>
+
+                    </div>
+
+
+                    <button
+                        type="button"
+                        id="refreshOrdersBtn"
+                        class="refresh-btn">
+
+                        ↻ Refresh
+
+                    </button>
+
+                </div>
+
+
+
+                <!-- LOADING -->
+
+                <div
+                    id="ordersLoading"
+                    class="loading-state">
+
+                    Loading orders...
+
+                </div>
+
+
+
+                <!-- TABLE -->
+
+                <div class="table-wrapper">
+
+                    <table class="order-table">
+
+                        <thead>
+
+                        <tr>
+
+                            <th>
+                                Order ID
+                            </th>
+
+                            <th>
+                                Purchase Request
+                            </th>
+
+                            <th>
+                                Tracking Number
+                            </th>
+
+                            <th>
+                                Status
+                            </th>
+
+                            <th>
+                                Estimated Delivery
+                            </th>
+
+                            <th>
+                                Actions
+                            </th>
+
+                        </tr>
+
+                        </thead>
+
+
+                        <tbody id="orderTableBody">
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+
+
+                <!-- EMPTY STATE -->
+
+                <div
+                    id="emptyOrders"
+                    class="empty-state">
+
+                    <div class="empty-icon">
+                        📦
+                    </div>
+
+
+                    <h3>
+                        No Assigned Orders
+                    </h3>
+
+
+                    <p>
+                        Orders assigned to your supplier
+                        account will appear here.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- =================================================
+                 RIGHT PANEL
+                 ================================================= -->
+
+            <div class="right-panel">
+
+
+                <!-- ORDER STATUS -->
+
+                <div class="status-card">
+
+                    <div class="card-header">
+
+                        <h3>
+                            Order Status
+                        </h3>
+
+                    </div>
+
+
+                    <div class="status-content">
+
+
+                        <div class="status-row">
+
+                            <span>
+                                Confirmed
+                            </span>
+
+                            <strong id="confirmedCount">
+                                0
+                            </strong>
+
+                        </div>
+
+
+                        <div class="status-row">
+
+                            <span>
+                                Preparing
+                            </span>
+
+                            <strong id="preparingCount">
+                                0
+                            </strong>
+
+                        </div>
+
+
+                        <div class="status-row">
+
+                            <span>
+                                Shipped
+                            </span>
+
+                            <strong id="shippedCount">
+                                0
+                            </strong>
+
+                        </div>
+
+
+                        <div class="status-row">
+
+                            <span>
+                                Out for Delivery
+                            </span>
+
+                            <strong id="outForDeliveryCount">
+                                0
+                            </strong>
+
+                        </div>
+
+
+                        <div class="status-row">
+
+                            <span>
+                                Delivered
+                            </span>
+
+                            <strong id="deliveredCount">
+                                0
+                            </strong>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- SHIPMENT FLOW -->
+
+                <div class="flow-card">
+
+                    <div class="card-header">
+
+                        <h3>
+                            Shipment Flow
+                        </h3>
+
+                    </div>
+
+
+                    <div class="shipment-flow">
+
+
+                        <div class="flow-step">
+
+                            <span class="flow-number">
+                                1
+                            </span>
+
+                            <span>
+                                Confirm Order
+                            </span>
+
+                        </div>
+
+
+                        <div class="flow-line"></div>
+
+
+                        <div class="flow-step">
+
+                            <span class="flow-number">
+                                2
+                            </span>
+
+                            <span>
+                                Prepare
+                            </span>
+
+                        </div>
+
+
+                        <div class="flow-line"></div>
+
+
+                        <div class="flow-step">
+
+                            <span class="flow-number">
+                                3
+                            </span>
+
+                            <span>
+                                Ship
+                            </span>
+
+                        </div>
+
+
+                        <div class="flow-line"></div>
+
+
+                        <div class="flow-step">
+
+                            <span class="flow-number">
+                                4
+                            </span>
+
+                            <span>
+                                Deliver
+                            </span>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- SYSTEM STATUS -->
+
+                <div class="system-card">
+
+                    <div class="card-header">
+
+                        <h3>
+                            System Status
+                        </h3>
+
+                    </div>
+
+
+                    <div class="system-status-row">
+
+                        <span>
+                            API
+                        </span>
+
+                        <span class="online-status">
+                            Online
+                        </span>
+
+                    </div>
+
+
+                    <div class="system-status-row">
+
+                        <span>
+                            Supplier Account
+                        </span>
+
+                        <span
+                            id="supplierAccountStatus"
+                            class="online-status">
+
+                            Active
+
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+</div>
+
+
+<!-- =====================================================
+     JAVASCRIPT
+     ===================================================== -->
+
+<script src="js/supplier-dashboard.js"></script>
+
+</body>
+
+</html>

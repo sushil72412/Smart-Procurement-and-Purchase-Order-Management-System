@@ -1,4 +1,4 @@
-package com.epms.service.impl;
+package com.epms.service;
 
 import com.epms.dto.PaymentRequest;
 import com.epms.dto.PaymentResponse;

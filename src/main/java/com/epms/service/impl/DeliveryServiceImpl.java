@@ -152,7 +152,7 @@ public class DeliveryServiceImpl implements DeliveryService {
     @Override
     public List<DeliveryResponse> getAllDeliveries() {
 
-        return deliveryRepository.findAll()
+        return deliveryRepository.findAllWithDetails()
                 .stream()
                 .map(this::mapToResponse)
                 .toList();

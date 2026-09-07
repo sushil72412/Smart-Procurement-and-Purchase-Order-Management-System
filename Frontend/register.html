@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>EPMS - Registration</title>
+
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+<div class="auth-container">
+
+    <!-- Left Section -->
+    <div class="auth-info">
+
+        <div class="brand">
+            <div class="brand-logo">EP</div>
+            <span>EPMS</span>
+        </div>
+
+        <div class="info-content">
+
+            <h1>Join EPMS</h1>
+
+            <p>
+                Create your account and start managing
+                enterprise procurement efficiently.
+            </p>
+
+            <div class="feature">
+                <span>✓</span>
+                <p>Manage Purchase Requests</p>
+            </div>
+
+            <div class="feature">
+                <span>✓</span>
+                <p>Track Orders & Deliveries</p>
+            </div>
+
+            <div class="feature">
+                <span>✓</span>
+                <p>Manage Suppliers & Products</p>
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- Registration Form -->
+    <div class="auth-form-container">
+
+        <div class="auth-form">
+
+            <h2>Create Account</h2>
+
+            <p class="form-subtitle">
+                Register for your EPMS account
+            </p>
+
+            <div id="registerMessage" class="message"></div>
+
+            <form id="registerForm">
+
+                <div class="form-group">
+
+                    <label for="fullName">
+                        Full Name
+                    </label>
+
+                    <input
+                        type="text"
+                        id="fullName"
+                        name="fullName"
+                        placeholder="Enter your full name"
+                        required
+                    >
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="registerEmail">
+                        Email Address
+                    </label>
+
+                    <input
+                        type="email"
+                        id="registerEmail"
+                        name="email"
+                        placeholder="Enter your email"
+                        required
+                    >
+
+                </div>
+
+                <div class="form-group">
+
+                    <label for="phone">
+                        Phone Number
+                    </label>
+
+                    <input
+                        type="tel"
+                        id="phone"
+                        name="phone"
+                        placeholder="Enter 10-digit phone number"
+                        maxlength="10"
+                        pattern="[0-9]{10}"
+                        required
+                    >
+
+                </div>
+
+                <div class="form-group">
+
+                    <label for="registerPassword">
+                        Password
+                    </label>
+
+                    <input
+                        type="password"
+                        id="registerPassword"
+                        name="password"
+                        placeholder="Create a password"
+                        required
+                    >
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="confirmPassword">
+                        Confirm Password
+                    </label>
+
+                    <input
+                        type="password"
+                        id="confirmPassword"
+                        name="confirmPassword"
+                        placeholder="Confirm your password"
+                        required
+                    >
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="role">
+                        Account Type
+                    </label>
+
+                    <select id="role" name="role" required>
+
+                        <option value="">
+                            Select account type
+                        </option>
+
+                        <option value="EMPLOYEE">
+                            Employee
+                        </option>
+
+                        <option value="MANAGER">
+                            Manager
+                        </option>
+
+                        <option value="SUPPLIER">
+                            Supplier
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <button type="submit" class="auth-button">
+                    Create Account
+                </button>
+
+            </form>
+
+
+            <p class="switch-auth">
+
+                Already have an account?
+
+                <a href="index.html">
+                    Login
+                </a>
+
+            </p>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<script src="js/app.js"></script>
+
+</body>
+</html>

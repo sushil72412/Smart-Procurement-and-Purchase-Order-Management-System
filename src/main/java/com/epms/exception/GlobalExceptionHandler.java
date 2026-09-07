@@ -12,6 +12,10 @@ import java.util.List;
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
+    // =========================================================
+    // VALIDATION EXCEPTION
+    // =========================================================
+
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<ErrorResponse> handleValidationException(
             MethodArgumentNotValidException ex) {
@@ -28,12 +32,22 @@ public class GlobalExceptionHandler {
                 errors
         );
 
-        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(
+                response,
+                HttpStatus.BAD_REQUEST
+        );
     }
+
+
+    // =========================================================
+    // RUNTIME EXCEPTION
+    // =========================================================
 
     @ExceptionHandler(RuntimeException.class)
     public ResponseEntity<ErrorResponse> handleRuntimeException(
             RuntimeException ex) {
+
+        ex.printStackTrace();
 
         ErrorResponse response = new ErrorResponse(
                 false,
@@ -41,11 +55,35 @@ public class GlobalExceptionHandler {
                 List.of()
         );
 
-        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(
+                response,
+                HttpStatus.BAD_REQUEST
+        );
     }
 
+
+    // =========================================================
+    // ALL OTHER EXCEPTIONS
+    // =========================================================
+
     @ExceptionHandler(Exception.class)
-    public ResponseEntity<String> handleAll(Exception ex) {
-        return ResponseEntity.badRequest().body("Global Exception Handler is Working");
+    public ResponseEntity<ErrorResponse> handleAll(
+            Exception ex) {
+
+        // Print complete error in IntelliJ console
+        ex.printStackTrace();
+
+        ErrorResponse response = new ErrorResponse(
+                false,
+                ex.getMessage() != null
+                        ? ex.getMessage()
+                        : ex.getClass().getSimpleName(),
+                List.of()
+        );
+
+        return new ResponseEntity<>(
+                response,
+                HttpStatus.BAD_REQUEST
+        );
     }
 }
