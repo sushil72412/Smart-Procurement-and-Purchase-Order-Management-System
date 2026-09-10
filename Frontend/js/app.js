@@ -125,12 +125,79 @@ document.addEventListener("DOMContentLoaded", function () {
                 console.log("Email:", data.email);
                 console.log("Role:", data.role);
 
-
-                showMessage(
+                showMessage(                
                     message,
                     "Login successful!",
                     "success"
                 );
+                
+                
+    /* =====================================================                
+    ROLE-BASED DASHBOARD REDIRECTION
+   ===================================================== */
+                
+                setTimeout(function () {
+                    const role =
+                        String(data.role || "")
+                            .toUpperCase()
+                            .trim();
+
+
+                    switch (role) {
+
+                        case "ADMIN":
+
+                            window.location.href =
+                                "admin-dashboard.html";
+
+                            break;
+
+
+                        case "MANAGER":
+
+                            window.location.href =
+                                "manager-dashboard.html";
+
+                            break;
+
+
+                        case "SUPPLIER":
+
+                            window.location.href =
+                                "supplier-dashboard.html";
+
+                            break;
+
+
+                        case "EMPLOYEE":
+
+                            window.location.href =
+                                "dashboard.html";
+
+                            break;
+
+
+                        default:
+
+                            console.error(
+                                "Unknown user role:",
+                                data.role
+                            );
+
+                            showMessage(
+                                message,
+                                "Login successful, but user role is invalid.",
+                                "error"
+                            );
+
+                            localStorage.removeItem("token");
+                            localStorage.removeItem("email");
+                            localStorage.removeItem("role");
+
+                            break;
+                    }
+
+                }, 500);
 
 
                 /*

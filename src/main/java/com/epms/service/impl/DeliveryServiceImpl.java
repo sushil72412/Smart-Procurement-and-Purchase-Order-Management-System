@@ -17,6 +17,8 @@ import com.epms.repository.PurchaseRequestRepository;
 import com.epms.repository.SupplierRepository;
 import com.epms.service.DeliveryService;
 import com.epms.service.EmailService;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -42,9 +44,22 @@ public class DeliveryServiceImpl implements DeliveryService {
         this.emailService = emailService;
     }
 
+    // =========================================================
+    // CREATE DELIVERY
+    // =========================================================
+
     @Override
     public DeliveryResponse createDelivery(
             CreateDeliveryRequest request) {
+
+        // Only ADMIN and MANAGER can create deliveries
+        Role role = getCurrentUserRole();
+
+        if (role != Role.ADMIN && role != Role.MANAGER) {
+            throw new RuntimeException(
+                    "Only admins and managers can create deliveries."
+            );
+        }
 
         // 1. Find purchase request
         PurchaseRequest purchaseRequest =
@@ -119,6 +134,10 @@ public class DeliveryServiceImpl implements DeliveryService {
         return mapToResponse(savedDelivery);
     }
 
+    // =========================================================
+    // GET DELIVERY BY ID
+    // =========================================================
+
     @Override
     public DeliveryResponse getDeliveryById(Long id) {
 
@@ -129,8 +148,14 @@ public class DeliveryServiceImpl implements DeliveryService {
                                         "Delivery not found."
                                 ));
 
+        validateDeliveryViewAccess(delivery);
+
         return mapToResponse(delivery);
     }
+
+    // =========================================================
+    // GET DELIVERY BY PURCHASE REQUEST
+    // =========================================================
 
     @Override
     public DeliveryResponse getDeliveryByPurchaseRequestId(
@@ -146,11 +171,27 @@ public class DeliveryServiceImpl implements DeliveryService {
                                         "Delivery not found for this purchase request."
                                 ));
 
+        validateDeliveryViewAccess(delivery);
+
         return mapToResponse(delivery);
     }
 
+    // =========================================================
+    // GET ALL DELIVERIES
+    // =========================================================
+
     @Override
     public List<DeliveryResponse> getAllDeliveries() {
+
+        Role role = getCurrentUserRole();
+
+        // Only ADMIN and MANAGER can view all deliveries
+        if (role != Role.ADMIN && role != Role.MANAGER) {
+
+            throw new RuntimeException(
+                    "Only admins and managers can view all deliveries."
+            );
+        }
 
         return deliveryRepository.findAllWithDetails()
                 .stream()
@@ -158,23 +199,66 @@ public class DeliveryServiceImpl implements DeliveryService {
                 .toList();
     }
 
+    // =========================================================
+    // GET DELIVERIES BY SUPPLIER
+    // =========================================================
+
     @Override
     public List<DeliveryResponse> getDeliveriesBySupplier(
             Long supplierId) {
 
-        if (!supplierRepository.existsById(supplierId)) {
+        Supplier supplier =
+                supplierRepository.findById(supplierId)
+                        .orElseThrow(() ->
+                                new RuntimeException(
+                                        "Supplier not found."
+                                ));
 
-            throw new RuntimeException(
-                    "Supplier not found."
-            );
+        Role role = getCurrentUserRole();
+
+        // ADMIN and MANAGER can view any supplier's deliveries
+        if (role == Role.ADMIN || role == Role.MANAGER) {
+
+            return deliveryRepository
+                    .findBySupplierId(supplierId)
+                    .stream()
+                    .map(this::mapToResponse)
+                    .toList();
         }
 
-        return deliveryRepository
-                .findBySupplierId(supplierId)
-                .stream()
-                .map(this::mapToResponse)
-                .toList();
+        // SUPPLIER can view only their own deliveries
+        if (role == Role.SUPPLIER) {
+
+            String currentUserEmail =
+                    getCurrentUserEmail();
+
+            String supplierEmail =
+                    supplier.getUser().getEmail();
+
+            if (!supplierEmail.equalsIgnoreCase(
+                    currentUserEmail)) {
+
+                throw new RuntimeException(
+                        "You can only view your own deliveries."
+                );
+            }
+
+            return deliveryRepository
+                    .findBySupplierId(supplierId)
+                    .stream()
+                    .map(this::mapToResponse)
+                    .toList();
+        }
+
+        // EMPLOYEE is not allowed to use supplier endpoint
+        throw new RuntimeException(
+                "You are not authorized to view supplier deliveries."
+        );
     }
+
+    // =========================================================
+    // UPDATE DELIVERY STATUS
+    // =========================================================
 
     @Override
     public DeliveryResponse updateDeliveryStatus(
@@ -189,19 +273,22 @@ public class DeliveryServiceImpl implements DeliveryService {
                                         "Delivery not found."
                                 ));
 
+        // 2. Check authorization
+        validateDeliveryUpdateAccess(delivery);
+
+        // 3. Validate status transition
         DeliveryStatus currentStatus =
                 delivery.getStatus();
 
         DeliveryStatus newStatus =
                 request.getStatus();
 
-        // 2. Validate status transition
         validateStatusTransition(
                 currentStatus,
                 newStatus
         );
 
-        // 3. Update timestamps
+        // 4. Update timestamps
         LocalDateTime now =
                 LocalDateTime.now();
 
@@ -220,18 +307,22 @@ public class DeliveryServiceImpl implements DeliveryService {
             delivery.setDeliveredAt(now);
         }
 
-        // 4. Update status
+        // 5. Update status
         delivery.setStatus(newStatus);
 
-        // 5. Save delivery
+        // 6. Save delivery
         Delivery updatedDelivery =
                 deliveryRepository.save(delivery);
 
-        // 6. Notify employee
+        // 7. Notify employee
         sendDeliveryStatusEmail(updatedDelivery);
 
         return mapToResponse(updatedDelivery);
     }
+
+    // =========================================================
+    // DELIVERY STATUS TRANSITION VALIDATION
+    // =========================================================
 
     private void validateStatusTransition(
             DeliveryStatus currentStatus,
@@ -274,11 +365,19 @@ public class DeliveryServiceImpl implements DeliveryService {
         );
     }
 
+    // =========================================================
+    // GENERATE TRACKING NUMBER
+    // =========================================================
+
     private String generateTrackingNumber() {
 
         return "EPMS-"
                 + System.currentTimeMillis();
     }
+
+    // =========================================================
+    // SEND DELIVERY STATUS EMAIL
+    // =========================================================
 
     private void sendDeliveryStatusEmail(
             Delivery delivery) {
@@ -321,6 +420,194 @@ public class DeliveryServiceImpl implements DeliveryService {
                 body
         );
     }
+
+    // =========================================================
+    // GET CURRENT USER ROLE
+    // =========================================================
+
+    private Role getCurrentUserRole() {
+
+        Authentication authentication =
+                SecurityContextHolder
+                        .getContext()
+                        .getAuthentication();
+
+        if (authentication == null
+                || !authentication.isAuthenticated()) {
+
+            throw new RuntimeException(
+                    "User is not authenticated."
+            );
+        }
+
+        if (authentication.getAuthorities()
+                .stream()
+                .anyMatch(authority ->
+                        authority.getAuthority()
+                                .equals("ROLE_ADMIN"))) {
+
+            return Role.ADMIN;
+        }
+
+        if (authentication.getAuthorities()
+                .stream()
+                .anyMatch(authority ->
+                        authority.getAuthority()
+                                .equals("ROLE_MANAGER"))) {
+
+            return Role.MANAGER;
+        }
+
+        if (authentication.getAuthorities()
+                .stream()
+                .anyMatch(authority ->
+                        authority.getAuthority()
+                                .equals("ROLE_SUPPLIER"))) {
+
+            return Role.SUPPLIER;
+        }
+
+        if (authentication.getAuthorities()
+                .stream()
+                .anyMatch(authority ->
+                        authority.getAuthority()
+                                .equals("ROLE_EMPLOYEE"))) {
+
+            return Role.EMPLOYEE;
+        }
+
+        throw new RuntimeException(
+                "Invalid user role."
+        );
+    }
+
+    // =========================================================
+    // GET CURRENT USER EMAIL
+    // =========================================================
+
+    private String getCurrentUserEmail() {
+
+        Authentication authentication =
+                SecurityContextHolder
+                        .getContext()
+                        .getAuthentication();
+
+        if (authentication == null
+                || !authentication.isAuthenticated()) {
+
+            throw new RuntimeException(
+                    "User is not authenticated."
+            );
+        }
+
+        return authentication.getName();
+    }
+
+    // =========================================================
+    // DELIVERY VIEW AUTHORIZATION
+    // =========================================================
+
+    private void validateDeliveryViewAccess(
+            Delivery delivery) {
+
+        Role role = getCurrentUserRole();
+
+        // ADMIN and MANAGER can view all deliveries
+        if (role == Role.ADMIN || role == Role.MANAGER) {
+            return;
+        }
+
+        String currentUserEmail =
+                getCurrentUserEmail();
+
+        // SUPPLIER can view only their own deliveries
+        if (role == Role.SUPPLIER) {
+
+            String supplierEmail =
+                    delivery.getSupplier()
+                            .getUser()
+                            .getEmail();
+
+            if (!supplierEmail.equalsIgnoreCase(
+                    currentUserEmail)) {
+
+                throw new RuntimeException(
+                        "You can only view your own deliveries."
+                );
+            }
+
+            return;
+        }
+
+        // EMPLOYEE can view only their own deliveries
+        if (role == Role.EMPLOYEE) {
+
+            String employeeEmail =
+                    delivery.getPurchaseRequest()
+                            .getUser()
+                            .getEmail();
+
+            if (!employeeEmail.equalsIgnoreCase(
+                    currentUserEmail)) {
+
+                throw new RuntimeException(
+                        "You can only view your own deliveries."
+                );
+            }
+
+            return;
+        }
+
+        throw new RuntimeException(
+                "You are not authorized to view this delivery."
+        );
+    }
+
+    // =========================================================
+    // DELIVERY UPDATE AUTHORIZATION
+    // =========================================================
+
+    private void validateDeliveryUpdateAccess(
+            Delivery delivery) {
+
+        Role role = getCurrentUserRole();
+
+        // ADMIN and MANAGER can update any delivery
+        if (role == Role.ADMIN || role == Role.MANAGER) {
+            return;
+        }
+
+        // SUPPLIER can update only their own deliveries
+        if (role == Role.SUPPLIER) {
+
+            String currentUserEmail =
+                    getCurrentUserEmail();
+
+            String supplierEmail =
+                    delivery.getSupplier()
+                            .getUser()
+                            .getEmail();
+
+            if (!supplierEmail.equalsIgnoreCase(
+                    currentUserEmail)) {
+
+                throw new RuntimeException(
+                        "You can only update your own deliveries."
+                );
+            }
+
+            return;
+        }
+
+        // EMPLOYEE cannot update delivery status
+        throw new RuntimeException(
+                "Employees cannot update delivery status."
+        );
+    }
+
+    // =========================================================
+    // MAP ENTITY TO RESPONSE
+    // =========================================================
 
     private DeliveryResponse mapToResponse(
             Delivery delivery) {

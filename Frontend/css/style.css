@@ -823,3 +823,48 @@ td {
     }
 
 }
+
+/* =========================================================
+   SUPPLIER MANAGEMENT
+   ========================================================= */
+
+.suppliers-management {
+    margin-top: 20px;
+}
+
+.supplier-controls {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.supplier-name {
+    font-weight: 600;
+    color: #334155;
+}
+
+.supplier-company {
+    color: #269b7b;
+    font-weight: 600;
+}
+
+.supplier-view-btn {
+    padding: 6px 10px;
+    border: 1px solid #dce2e8;
+    border-radius: 6px;
+    background: white;
+    color: #536174;
+    font-size: 9px;
+    cursor: pointer;
+}
+
+.supplier-view-btn:hover {
+    background: #f5f7f9;
+}
+
+@media (max-width: 900px) {
+
+    .supplier-controls {
+        flex-wrap: wrap;
+    }
+}

@@ -55,24 +55,36 @@ public class PurchaseRequestServiceImpl
     // CREATE PURCHASE REQUEST
     // =========================================================
 
+
     @Override
     public PurchaseRequestResponse createPurchaseRequest(
             CreatePurchaseRequest request) {
 
-        User user = userRepository.findById(request.getUserId())
+        // Get authenticated employee
+        User currentUser = userRepository
+                .findByEmail(getCurrentUserEmail())
                 .orElseThrow(() ->
-                        new RuntimeException("User not found.")
+                        new RuntimeException("Authenticated user not found.")
                 );
 
-        // Only EMPLOYEE can create a purchase request
-        Role role = getCurrentUserRole();
-
-        if (role != Role.EMPLOYEE) {
-
+        // Only EMPLOYEE can create purchase request
+        if (currentUser.getRole() != Role.EMPLOYEE) {
             throw new RuntimeException(
                     "Only employees can create purchase requests."
             );
         }
+
+        // Employee can create request only for themselves
+        if (!currentUser.getId().equals(request.getUserId())) {
+            throw new RuntimeException(
+                    "You can only create purchase requests for yourself."
+            );
+        }
+
+        User user = currentUser;
+
+        // continue with your existing code...
+
 
         PurchaseRequest purchaseRequest =
                 new PurchaseRequest();

@@ -37,10 +37,6 @@ public class UserServiceImpl implements UserService {
         // Encrypt password
         String encryptedPassword = passwordEncoder.encode(request.getPassword());
 
-        // Debug
-        System.out.println("Original Password : " + request.getPassword());
-        System.out.println("Encrypted Password: " + encryptedPassword);
-
         user.setPassword(encryptedPassword);
 
         // Save user

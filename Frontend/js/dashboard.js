@@ -71,6 +71,13 @@ document.addEventListener("DOMContentLoaded", function () {
 
     setupLogout();
 
+    document.getElementById("viewRequestsButton")
+    .addEventListener("click", function () {
+
+        window.location.href = "purchase-requests.html";
+
+    });
+
 });
 
 
