@@ -145,15 +145,14 @@ public class SecurityConfig {
                         // SUPPLIERS
                         // =========================================
 
-                        .requestMatchers(
-                                "/api/suppliers/**"
-                        )
-                        .hasAnyRole(
-                                "ADMIN",
-                                "MANAGER",
-                                "SUPPLIER"
-                        )
-
+                                .requestMatchers(
+                                        "/api/suppliers/**"
+                                )
+                                .hasAnyRole(
+                                        "ADMIN",
+                                        "MANAGER",
+                                        "SUPPLIER"
+                                )
 
                         // =========================================
                         // DELIVERIES

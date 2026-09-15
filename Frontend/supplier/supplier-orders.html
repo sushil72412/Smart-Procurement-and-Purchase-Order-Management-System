@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Supplier Orders - EPMS</title>
+
+    <link rel="stylesheet"
+          href="../css/supplier-dashboard.css">
+
+</head>
+
+
+<body>
+
+<div class="dashboard-container">
+
+
+    <!-- =====================================================
+         SIDEBAR
+         ===================================================== -->
+
+    <aside class="sidebar">
+
+        <div class="logo">
+
+            <h2>EPMS</h2>
+
+            <span>
+                Procurement System
+            </span>
+
+        </div>
+
+
+        <nav class="sidebar-nav">
+
+            <a href="supplier-dashboard.html"
+               class="nav-item">
+
+                <span class="nav-icon">
+                    ▦
+                </span>
+
+                Dashboard
+
+            </a>
+
+
+            <a href="supplier-orders.html"
+               class="nav-item active">
+
+                <span class="nav-icon">
+                    📦
+                </span>
+
+                Orders
+
+            </a>
+
+
+            <a href="supplier-deliveries.html"
+               class="nav-item">
+
+                <span class="nav-icon">
+                    🚚
+                </span>
+
+                Shipments
+
+            </a>
+
+
+            <a href="supplier-payments.html"
+               class="nav-item">
+
+                <span class="nav-icon">
+                    💳
+                </span>
+
+                Payments
+
+            </a>
+
+
+            <a href="supplier-reports.html"
+               class="nav-item">
+
+                <span class="nav-icon">
+                    📊
+                </span>
+
+                Reports
+
+            </a>
+
+        </nav>
+
+
+        <!-- USER CARD -->
+
+        <div class="user-card">
+
+            <div class="user-avatar"
+                 id="supplierAvatar">
+
+                S
+
+            </div>
+
+
+            <div class="user-info">
+
+                <strong id="supplierName">
+                    Supplier
+                </strong>
+
+                <span id="supplierEmail">
+                    supplier@email.com
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <!-- LOGOUT -->
+
+        <button
+            type="button"
+            id="logoutBtn"
+            class="logout-btn">
+
+            Logout
+
+        </button>
+
+    </aside>
+
+
+
+    <!-- =====================================================
+         MAIN CONTENT
+         ===================================================== -->
+
+    <main class="main-content">
+
+
+        <!-- TOPBAR -->
+
+        <header class="topbar">
+
+            <div>
+
+                <h1>
+                    Supplier Orders
+                </h1>
+
+                <p>
+                    View and manage your assigned orders
+                </p>
+
+            </div>
+
+
+            <div class="topbar-user">
+
+                <span class="role-badge">
+                    SUPPLIER
+                </span>
+
+            </div>
+
+        </header>
+
+
+
+        <!-- =================================================
+             PAGE CONTENT
+             ================================================= -->
+
+        <section class="welcome-section">
+
+            <div>
+
+                <h2>
+                    Assigned Orders
+                </h2>
+
+                <p>
+                    Orders assigned to your supplier account.
+                </p>
+
+            </div>
+
+
+            <button
+                type="button"
+                id="refreshOrdersBtn"
+                class="refresh-btn">
+
+                ↻ Refresh
+
+            </button>
+
+        </section>
+
+
+
+        <!-- =================================================
+             SUMMARY
+             ================================================= -->
+
+        <section class="summary-grid">
+
+
+            <div class="summary-card">
+
+                <div class="summary-icon">
+                    📦
+                </div>
+
+                <div class="summary-content">
+
+                    <span>
+                        Total Orders
+                    </span>
+
+                    <strong id="totalOrders">
+                        0
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+
+            <div class="summary-card">
+
+                <div class="summary-icon">
+                    🔄
+                </div>
+
+                <div class="summary-content">
+
+                    <span>
+                        Active Orders
+                    </span>
+
+                    <strong id="activeOrders">
+                        0
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+
+            <div class="summary-card">
+
+                <div class="summary-icon">
+                    🚚
+                </div>
+
+                <div class="summary-content">
+
+                    <span>
+                        Ready to Ship
+                    </span>
+
+                    <strong id="readyToShip">
+                        0
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+
+            <div class="summary-card">
+
+                <div class="summary-icon">
+                    ✅
+                </div>
+
+                <div class="summary-content">
+
+                    <span>
+                        Delivered
+                    </span>
+
+                    <strong id="deliveredOrders">
+                        0
+                    </strong>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =================================================
+             ORDERS TABLE
+             ================================================= -->
+
+        <section class="orders-section">
+
+
+            <div class="section-header">
+
+                <div>
+
+                    <h2>
+                        Orders
+                    </h2>
+
+                    <p>
+                        Complete list of orders assigned to you.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- LOADING -->
+
+            <div
+                id="ordersLoading"
+                class="loading-state">
+
+                Loading orders...
+
+            </div>
+
+
+
+            <!-- TABLE -->
+
+            <div class="table-wrapper">
+
+                <table class="order-table">
+
+                    <thead>
+
+                    <tr>
+
+                        <th>
+                            Order ID
+                        </th>
+
+                        <th>
+                            Purchase Request
+                        </th>
+
+                        <th>
+                            Tracking Number
+                        </th>
+
+                        <th>
+                            Status
+                        </th>
+
+                        <th>
+                            Estimated Delivery
+                        </th>
+
+                        <th>
+                            Action
+                        </th>
+
+                    </tr>
+
+                    </thead>
+
+
+                    <tbody id="orderTableBody">
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+
+
+            <!-- EMPTY STATE -->
+
+            <div
+                id="emptyOrders"
+                class="empty-state">
+
+                <div class="empty-icon">
+                    📦
+                </div>
+
+                <h3>
+                    No Assigned Orders
+                </h3>
+
+                <p>
+                    Orders assigned to your supplier account
+                    will appear here.
+                </p>
+
+            </div>
+
+
+        </section>
+
+
+
+    </main>
+
+</div>
+
+
+
+<!-- JAVASCRIPT -->
+
+<script src="../js/supplier/supplier-orders.js"></script>
+
+</body>
+
+</html>

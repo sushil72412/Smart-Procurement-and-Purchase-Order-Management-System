@@ -1,0 +1,638 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Admin Users - EPMS</title>
+
+    <link rel="stylesheet"
+          href="../css/admin-dashboard.css">
+</head>
+
+<body>
+
+<div class="dashboard-container">
+
+    <!-- =====================================================
+         SIDEBAR
+         ===================================================== -->
+
+    <aside class="sidebar">
+
+        <div class="logo">
+            <h1>EPMS</h1>
+            <span>Procurement System</span>
+        </div>
+
+        <nav class="sidebar-nav">
+
+            <a href="admin-dashboard.html"
+               class="nav-item">
+                <span>▦</span>
+                Dashboard
+            </a>
+
+            <a href="admin-users.html"
+               class="nav-item active">
+                <span>👥</span>
+                Users
+            </a>
+
+            <a href="admin-products.html"
+               class="nav-item">
+                <span>📦</span>
+                Products
+            </a>
+
+            <a href="admin-purchase-requests.html"
+               class="nav-item">
+                <span>📋</span>
+                Purchase Requests
+            </a>
+
+            <a href="admin-suppliers.html"
+               class="nav-item">
+                <span>🏢</span>
+                Suppliers
+            </a>
+
+            <a href="admin-deliveries.html"
+               class="nav-item">
+                <span>🚚</span>
+                Deliveries
+            </a>
+
+            <a href="admin-payments.html"
+               class="nav-item">
+                <span>💳</span>
+                Payments
+            </a>
+
+            <a href="admin-reports.html"
+               class="nav-item">
+                <span>📊</span>
+                Reports
+            </a>
+
+        </nav>
+
+
+        <!-- ADMIN PROFILE -->
+
+        <div class="user-card">
+
+            <div class="user-avatar"
+                 id="adminAvatar">
+                A
+            </div>
+
+            <div class="user-info">
+
+                <strong id="adminName">
+                    Administrator
+                </strong>
+
+                <span id="adminEmail">
+                    admin@epms.com
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <!-- LOGOUT -->
+
+        <button id="logoutBtn"
+                class="logout-btn">
+            🚪 Logout
+        </button>
+
+    </aside>
+
+
+    <!-- =====================================================
+         MAIN CONTENT
+         ===================================================== -->
+
+    <main class="main-content">
+
+
+        <!-- TOPBAR -->
+
+        <header class="topbar">
+
+            <div>
+
+                <h2>
+                    User Management
+                </h2>
+
+                <p id="currentStatus">
+                    Manage EPMS users
+                </p>
+
+            </div>
+
+
+            <div class="topbar-right">
+
+                <span class="role-badge">
+                    ADMIN
+                </span>
+
+            </div>
+
+        </header>
+
+
+        <!-- =================================================
+             USER MANAGEMENT
+             ================================================= -->
+
+        <section class="content-card users-management"
+                 id="users-management">
+
+
+            <!-- HEADER -->
+
+            <div class="card-header">
+
+                <div>
+
+                    <h3>
+                        User Management
+                    </h3>
+
+                    <p>
+                        Manage registered EPMS users
+                    </p>
+
+                </div>
+
+
+                <!-- CONTROLS -->
+
+                <div class="user-controls">
+
+                    <input
+                        type="text"
+                        id="userSearch"
+                        placeholder="Search users..."
+                        class="search-input"
+                    >
+
+
+                    <select
+                        id="roleFilter"
+                        class="role-filter">
+
+                        <option value="ALL">
+                            All Roles
+                        </option>
+
+                        <option value="ADMIN">
+                            Admin
+                        </option>
+
+                        <option value="MANAGER">
+                            Manager
+                        </option>
+
+                        <option value="EMPLOYEE">
+                            Employee
+                        </option>
+
+                        <option value="SUPPLIER">
+                            Supplier
+                        </option>
+
+                    </select>
+
+
+                    <button
+                        id="addUserBtn"
+                        class="add-user-btn">
+
+                        + Add User
+
+                    </button>
+
+
+                    <button
+                        id="refreshUsersBtn"
+                        class="refresh-btn">
+
+                        ↻ Refresh
+
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <!-- =================================================
+                 USERS TABLE
+                 ================================================= -->
+
+            <div class="table-container">
+
+                <table class="data-table users-table">
+
+                    <thead>
+
+                    <tr>
+
+                        <th>ID</th>
+
+                        <th>Name</th>
+
+                        <th>Email</th>
+
+                        <th>Phone</th>
+
+                        <th>Role</th>
+
+                        <th>Actions</th>
+
+                    </tr>
+
+                    </thead>
+
+
+                    <tbody id="usersTableBody">
+
+                    <tr>
+
+                        <td colspan="6"
+                            class="loading-cell">
+
+                            Loading users...
+
+                        </td>
+
+                    </tr>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </section>
+
+
+    </main>
+
+</div>
+
+
+<!-- =========================================================
+     ADD USER MODAL
+     ========================================================= -->
+
+<div class="modal-overlay"
+     id="addUserModal">
+
+    <div class="modal">
+
+
+        <div class="modal-header">
+
+            <div>
+
+                <h3>
+                    Add New User
+                </h3>
+
+                <p>
+                    Create a new EPMS user
+                </p>
+
+            </div>
+
+
+            <button
+                type="button"
+                class="modal-close"
+                id="closeAddModal">
+
+                ×
+
+            </button>
+
+        </div>
+
+
+        <form id="addUserForm">
+
+
+            <!-- FULL NAME -->
+
+            <div class="form-group">
+
+                <label for="addFullName">
+                    Full Name
+                </label>
+
+                <input
+                    type="text"
+                    id="addFullName"
+                    required
+                >
+
+            </div>
+
+
+            <!-- EMAIL -->
+
+            <div class="form-group">
+
+                <label for="addEmail">
+                    Email
+                </label>
+
+                <input
+                    type="email"
+                    id="addEmail"
+                    required
+                >
+
+            </div>
+
+
+            <!-- PHONE -->
+
+            <div class="form-group">
+
+                <label for="addPhone">
+                    Phone
+                </label>
+
+                <input
+                    type="text"
+                    id="addPhone"
+                    required
+                >
+
+            </div>
+
+
+            <!-- PASSWORD -->
+
+            <div class="form-group">
+
+                <label for="addPassword">
+                    Password
+                </label>
+
+                <input
+                    type="password"
+                    id="addPassword"
+                    required
+                    minlength="6"
+                >
+
+            </div>
+
+
+            <!-- ROLE -->
+
+            <div class="form-group">
+
+                <label for="addRole">
+                    Role
+                </label>
+
+                <select
+                    id="addRole"
+                    required>
+
+                    <option value="EMPLOYEE">
+                        Employee
+                    </option>
+
+                    <option value="MANAGER">
+                        Manager
+                    </option>
+
+                    <option value="SUPPLIER">
+                        Supplier
+                    </option>
+
+                    <option value="ADMIN">
+                        Admin
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <!-- ACTIONS -->
+
+            <div class="modal-actions">
+
+                <button
+                    type="button"
+                    class="cancel-btn"
+                    id="cancelAddBtn">
+
+                    Cancel
+
+                </button>
+
+
+                <button
+                    type="submit"
+                    class="save-btn"
+                    id="createUserBtn">
+
+                    Create User
+
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+
+<!-- =========================================================
+     EDIT USER MODAL
+     ========================================================= -->
+
+<div class="modal-overlay"
+     id="editUserModal">
+
+    <div class="modal">
+
+
+        <div class="modal-header">
+
+            <div>
+
+                <h3>
+                    Edit User
+                </h3>
+
+                <p>
+                    Update user information
+                </p>
+
+            </div>
+
+
+            <button
+                type="button"
+                class="modal-close"
+                id="closeEditModal">
+
+                ×
+
+            </button>
+
+        </div>
+
+
+        <form id="editUserForm">
+
+
+            <input
+                type="hidden"
+                id="editUserId"
+            >
+
+
+            <!-- FULL NAME -->
+
+            <div class="form-group">
+
+                <label for="editFullName">
+                    Full Name
+                </label>
+
+                <input
+                    type="text"
+                    id="editFullName"
+                    required
+                >
+
+            </div>
+
+
+            <!-- EMAIL -->
+
+            <div class="form-group">
+
+                <label for="editEmail">
+                    Email
+                </label>
+
+                <input
+                    type="email"
+                    id="editEmail"
+                    required
+                >
+
+            </div>
+
+
+            <!-- PHONE -->
+
+            <div class="form-group">
+
+                <label for="editPhone">
+                    Phone
+                </label>
+
+                <input
+                    type="text"
+                    id="editPhone"
+                    required
+                >
+
+            </div>
+
+
+            <!-- ROLE -->
+
+            <div class="form-group">
+
+                <label for="editRole">
+                    Role
+                </label>
+
+                <select
+                    id="editRole"
+                    required>
+
+                    <option value="ADMIN">
+                        Admin
+                    </option>
+
+                    <option value="MANAGER">
+                        Manager
+                    </option>
+
+                    <option value="EMPLOYEE">
+                        Employee
+                    </option>
+
+                    <option value="SUPPLIER">
+                        Supplier
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <!-- ACTIONS -->
+
+            <div class="modal-actions">
+
+                <button
+                    type="button"
+                    class="cancel-btn"
+                    id="cancelEditBtn">
+
+                    Cancel
+
+                </button>
+
+
+                <button
+                    type="submit"
+                    class="save-btn">
+
+                    Save Changes
+
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+
+<!-- =========================================================
+     JAVASCRIPT
+     ========================================================= -->
+
+<script src="../js/admin/admin-users.js"></script>
+
+</body>
+
+</html>

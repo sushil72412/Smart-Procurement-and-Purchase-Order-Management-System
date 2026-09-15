@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>EPMS - Deliveries</title>
+
+    <link rel="stylesheet" href="../css/dashboard.css">
+    <link rel="stylesheet" href="../css/deliveries.css">
+</head>
+
+<body>
+
+    <!-- ==============================
+         SIDEBAR
+    =============================== -->
+
+<!-- ==============================
+     SIDEBAR
+=============================== -->
+
+<aside class="sidebar">
+
+    <div class="logo">
+
+        <div class="logo-icon">E</div>
+
+        <span>EPMS</span>
+
+    </div>
+
+
+    <!-- MAIN NAVIGATION -->
+
+    <div class="sidebar-section">
+
+        <div class="section-title">
+            MAIN
+        </div>
+
+
+        <a href="dashboard.html" class="nav-item">
+
+            <span>▦</span>
+
+            <span>Overview</span>
+
+        </a>
+
+
+        <a href="purchase-requests.html" class="nav-item">
+
+            <span>▤</span>
+
+            <span>Purchase Requests</span>
+
+        </a>
+
+
+        <a href="products.html" class="nav-item">
+
+            <span>▣</span>
+
+            <span>Products</span>
+
+        </a>
+
+
+        <a href="deliveries.html" class="nav-item active">
+
+            <span>▱</span>
+
+            <span>Deliveries</span>
+
+        </a>
+
+
+        <a href="payments.html" class="nav-item">
+
+            <span>₹</span>
+
+            <span>Payments</span>
+
+        </a>
+
+
+        <a href="ratings.html" class="nav-item">
+
+            <span>★</span>
+
+            <span>Ratings</span>
+
+        </a>
+
+    </div>
+
+
+    <!-- SUPPORT -->
+
+    <div class="sidebar-section">
+
+        <div class="section-title">
+            SUPPORT
+        </div>
+
+
+        <a href="settings.html" class="nav-item">
+
+            <span>⚙</span>
+
+            <span>Settings</span>
+
+        </a>
+
+
+        <a href="support.html" class="nav-item">
+
+            <span>?</span>
+
+            <span>Support</span>
+
+        </a>
+
+    </div>
+
+
+    <!-- USER CARD -->
+
+    <div class="sidebar-bottom">
+
+        <div class="user-card">
+
+            <div class="user-avatar">
+                U
+            </div>
+
+
+            <div class="user-info">
+
+                <div id="userEmail">
+                    User
+                </div>
+
+                <span id="userRole">
+                    EMPLOYEE
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <button
+            type="button"
+            id="logoutButton"
+            class="logout-btn">
+
+            Logout
+
+        </button>
+
+    </div>
+
+</aside>
+
+    <!-- ==============================
+         MAIN CONTENT
+    =============================== -->
+
+    <main class="main-content">
+
+        <!-- TOPBAR -->
+
+        <header class="topbar">
+
+            <div class="breadcrumb">
+
+                <span class="breadcrumb-icon">
+                    ▱
+                </span>
+
+                <span>
+                    Deliveries
+                </span>
+
+            </div>
+
+            <div class="topbar-right">
+
+                <div class="system-status">
+
+                    <span class="status-dot"></span>
+
+                    System Operational
+
+                </div>
+
+                <div class="profile-avatar">
+                    U
+                </div>
+
+            </div>
+
+        </header>
+
+
+        <!-- ==============================
+             DASHBOARD CONTAINER
+        =============================== -->
+
+        <div class="dashboard-container">
+
+            <!-- PAGE HEADING -->
+
+            <section class="welcome-section">
+
+                <div>
+
+                    <div
+                        id="deliveryPageTitle"
+                        class="greeting">
+
+                        Deliveries
+
+                    </div>
+
+                    <p
+                        id="deliveryPageSubtitle"
+                        class="subtitle">
+
+                        Track and manage your purchase request deliveries.
+
+                    </p>
+
+                </div>
+
+            </section>
+
+
+            <!-- ==============================
+                 DELIVERY FILTERS
+            =============================== -->
+
+            <section class="delivery-filters">
+
+                <button
+                    type="button"
+                    class="delivery-filter active"
+                    data-status="ALL">
+
+                    All Deliveries
+
+                </button>
+
+                <button
+                    type="button"
+                    class="delivery-filter"
+                    data-status="PENDING">
+
+                    Pending
+
+                </button>
+
+                <button
+                    type="button"
+                    class="delivery-filter"
+                    data-status="IN_TRANSIT">
+
+                    In Transit
+
+                </button>
+
+                <button
+                    type="button"
+                    class="delivery-filter"
+                    data-status="DELIVERED">
+
+                    Delivered
+
+                </button>
+
+            </section>
+
+
+            <!-- ==============================
+                 DELIVERY CONTENT
+            =============================== -->
+
+            <section class="deliveries-section">
+
+                <div class="section-header">
+
+                    <div>
+
+                        <h2 id="deliverySectionTitle">
+                            My Deliveries
+                        </h2>
+
+                        <p id="deliverySectionSubtitle">
+                            View the status and details of your deliveries.
+                        </p>
+
+                    </div>
+
+                    <div
+                        id="deliveryCount"
+                        class="delivery-count">
+
+                        0 Deliveries
+
+                    </div>
+
+                </div>
+
+
+                <!-- DELIVERY LIST -->
+
+                <div
+                    id="deliveriesContainer"
+                    class="deliveries-container">
+
+                    <div class="loading-state">
+                        Loading deliveries...
+                    </div>
+
+                </div>
+
+            </section>
+
+        </div>
+
+    </main>
+
+
+    <!-- JAVASCRIPT -->
+
+    <script src="../js/employee/deliveries.js"></script>
+
+</body>
+
+</html>

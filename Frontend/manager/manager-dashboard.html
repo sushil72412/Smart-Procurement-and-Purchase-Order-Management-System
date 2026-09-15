@@ -1,0 +1,860 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>EPMS - Manager Dashboard</title>
+
+    <link rel="stylesheet"
+          href="../css/manager-dashboard.css">
+
+</head>
+
+<body>
+
+<div class="dashboard-container">
+
+    <!-- =====================================================
+         SIDEBAR
+         ===================================================== -->
+
+    <aside class="sidebar">
+
+        <!-- LOGO -->
+        <div class="logo">
+
+            <div class="logo-icon">
+                EP
+            </div>
+
+            <div>
+                <h2>EPMS</h2>
+                <span>Enterprise Procurement</span>
+            </div>
+
+        </div>
+
+
+        <!-- NAVIGATION -->
+        <nav class="sidebar-nav">
+
+            <a href="manager-dashboard.html"
+               class="nav-item active">
+
+                <span class="nav-icon">▦</span>
+                <span>Dashboard</span>
+
+            </a>
+
+
+            <a href="manager-purchase-requests.html"
+               class="nav-item">
+
+                <span class="nav-icon">▤</span>
+                <span>Purchase Requests</span>
+
+            </a>
+
+
+            <a href="manager-products.html"
+               class="nav-item">
+
+                <span class="nav-icon">📦</span>
+                <span>Products</span>
+
+            </a>
+
+
+            <a href="manager-deliveries.html"
+               class="nav-item">
+
+                <span class="nav-icon">🚚</span>
+                <span>Deliveries</span>
+
+            </a>
+
+
+            <a href="manager-payments.html"
+               class="nav-item">
+
+                <span class="nav-icon">💳</span>
+                <span>Payments</span>
+
+            </a>
+
+
+            <a href="reports.html"
+               class="nav-item">
+
+                <span class="nav-icon">📊</span>
+                <span>Reports</span>
+
+            </a>
+
+        </nav>
+
+
+        <!-- USER SECTION -->
+        <div class="sidebar-bottom">
+
+            <div class="user-card">
+
+                <div class="user-avatar">
+                    M
+                </div>
+
+                <div class="user-info">
+
+                    <strong id="managerName">
+                        Manager
+                    </strong>
+
+                    <small id="managerEmail">
+                        manager@email.com
+                    </small>
+
+                </div>
+
+            </div>
+
+
+            <button type="button"
+                    id="logoutBtn"
+                    class="logout-btn">
+
+                <span>↪</span>
+                <span>Sign out</span>
+
+            </button>
+
+        </div>
+
+    </aside>
+
+
+
+    <!-- =====================================================
+         MAIN CONTENT
+         ===================================================== -->
+
+    <main class="main-content">
+
+
+        <!-- TOPBAR -->
+
+        <header class="topbar">
+
+            <div class="breadcrumb">
+
+                <span class="breadcrumb-icon">
+                    /
+                </span>
+
+                <strong>
+                    Manager Dashboard
+                </strong>
+
+            </div>
+
+
+            <div class="topbar-right">
+
+                <div class="system-status">
+
+                    <span class="status-dot"></span>
+
+                    SYSTEM OPERATIONAL
+
+                </div>
+
+
+                <div class="profile-avatar"
+                     id="topProfileAvatar">
+
+                    M
+
+                </div>
+
+            </div>
+
+        </header>
+
+
+
+        <!-- =================================================
+             DASHBOARD CONTENT
+             ================================================= -->
+
+        <section class="dashboard-container">
+
+
+            <!-- WELCOME -->
+
+            <section class="welcome-section">
+
+                <div>
+
+                    <div class="greeting">
+                        MANAGER PROCUREMENT
+                    </div>
+
+                    <h1>
+                        Manager Dashboard
+                    </h1>
+
+                    <p class="subtitle">
+                        Review purchase requests and manage procurement activities.
+                    </p>
+
+                </div>
+
+
+                <div class="dashboard-actions">
+
+                    <button type="button"
+                            class="live-btn"
+                            id="refreshRequestsBtn">
+
+                        ↻ Refresh
+
+                    </button>
+
+                    <button type="button"
+                            class="review-btn"
+                            onclick="document.querySelector('.requests-section').scrollIntoView({ behavior: 'smooth' });">
+
+                        Review Requests
+
+                    </button>
+
+                </div>
+
+            </section>
+
+
+
+            <!-- =================================================
+                 SUMMARY CARDS
+                 ================================================= -->
+
+            <section class="summary-grid">
+
+
+                <!-- TOTAL -->
+
+                <div class="summary-card">
+
+                    <div class="card-icon">
+                        📋
+                    </div>
+
+                    <span class="card-label">
+                        TOTAL REQUESTS
+                    </span>
+
+                    <h2 id="totalRequests">
+                        0
+                    </h2>
+
+                    <p class="card-description">
+                        All purchase requests
+                    </p>
+
+                    <span class="card-arrow">
+                        →
+                    </span>
+
+                </div>
+
+
+
+                <!-- PENDING -->
+
+                <div class="summary-card pending-card">
+
+                    <div class="card-icon">
+                        ⏳
+                    </div>
+
+                    <span class="card-label">
+                        PENDING APPROVALS
+                    </span>
+
+                    <h2 id="pendingRequests">
+                        0
+                    </h2>
+
+                    <p class="card-description">
+                        Requests awaiting review
+                    </p>
+
+                    <span class="card-arrow">
+                        →
+                    </span>
+
+                </div>
+
+
+
+                <!-- APPROVED -->
+
+                <div class="summary-card approved-card">
+
+                    <div class="card-icon">
+                        ✓
+                    </div>
+
+                    <span class="card-label">
+                        APPROVED REQUESTS
+                    </span>
+
+                    <h2 id="approvedRequests">
+                        0
+                    </h2>
+
+                    <p class="card-description">
+                        Successfully approved
+                    </p>
+
+                    <span class="card-arrow">
+                        →
+                    </span>
+
+                </div>
+
+
+
+                <!-- REJECTED -->
+
+                <div class="summary-card rejected-card">
+
+                    <div class="card-icon">
+                        ✕
+                    </div>
+
+                    <span class="card-label">
+                        REJECTED REQUESTS
+                    </span>
+
+                    <h2 id="rejectedRequests">
+                        0
+                    </h2>
+
+                    <p class="card-description">
+                        Requests rejected
+                    </p>
+
+                    <span class="card-arrow">
+                        →
+                    </span>
+
+                </div>
+
+            </section>
+
+
+
+            <!-- =================================================
+                 LOWER DASHBOARD
+                 ================================================= -->
+
+            <section class="dashboard-grid">
+
+
+                <!-- PURCHASE REQUESTS -->
+
+                <div class="requests-section">
+
+                    <div class="section-header">
+
+                        <div>
+
+                            <h2>
+                                Purchase Requests
+                            </h2>
+
+                            <p>
+                                Review and process employee purchase requests.
+                            </p>
+
+                        </div>
+
+
+                        <div class="request-tools">
+
+                            <input type="text"
+                                   id="requestSearch"
+                                   placeholder="Search requests...">
+
+
+                            <select id="requestStatusFilter">
+
+                                <option value="ALL">
+                                    All
+                                </option>
+
+                                <option value="PENDING">
+                                    Pending
+                                </option>
+
+                                <option value="APPROVED">
+                                    Approved
+                                </option>
+
+                                <option value="REJECTED">
+                                    Rejected
+                                </option>
+
+                            </select>
+
+
+                            <button type="button"
+                                    id="refreshRequestsBtn"
+                                    class="refresh-btn">
+
+                                ↻
+
+                            </button>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- LOADING -->
+
+                    <div id="requestsLoading"
+                         class="loading-state">
+
+                        Loading purchase requests...
+
+                    </div>
+
+
+                    <!-- TABLE -->
+
+                    <div class="request-table-wrapper">
+
+                        <table class="request-table">
+
+                            <thead>
+
+                            <tr>
+
+                                <th>
+                                    REQUEST ID
+                                </th>
+
+                                <th>
+                                    EMPLOYEE
+                                </th>
+
+                                <th>
+                                    PRODUCT
+                                </th>
+
+                                <th>
+                                    DATE
+                                </th>
+
+                                <th>
+                                    STATUS
+                                </th>
+
+                                <th>
+                                    ACTIONS
+                                </th>
+
+                            </tr>
+
+                            </thead>
+
+
+                            <tbody id="requestTableBody">
+
+                            </tbody>
+
+                        </table>
+
+                    </div>
+
+
+                    <!-- EMPTY STATE -->
+
+                    <div id="emptyRequests"
+                         class="empty-state">
+
+                        <div class="empty-icon">
+                            📋
+                        </div>
+
+                        <h3>
+                            No Purchase Requests
+                        </h3>
+
+                        <p>
+                            There are currently no purchase requests to review.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- =================================================
+                     RIGHT SIDE
+                     ================================================= -->
+
+                <div class="dashboard-right">
+
+
+                    <!-- APPROVAL PULSE -->
+
+                    <div class="pulse-card">
+
+                        <div class="pulse-header">
+
+                            <span>
+                                APPROVAL PULSE
+                            </span>
+
+                            <div class="pulse-icon">
+                                ⏳
+                            </div>
+
+                        </div>
+
+
+                        <h2>
+                            <span id="pulsePending">
+                                0
+                            </span>
+                            requests pending
+                        </h2>
+
+
+                        <p>
+                            Keep the approval queue moving by reviewing
+                            employee purchase requests.
+                        </p>
+
+
+                        <button type="button"
+                                onclick="document.querySelector('.requests-section').scrollIntoView({ behavior: 'smooth' });">
+
+                            Review Approval Queue
+
+                        </button>
+
+                    </div>
+
+
+
+                    <!-- PROCUREMENT STATUS -->
+
+                    <div class="status-card">
+
+                        <div class="status-title">
+
+                            <span>
+                                PROCUREMENT STATUS
+                            </span>
+
+                            <span class="check">
+                                ✓
+                            </span>
+
+                        </div>
+
+
+                        <h3>
+                            System Overview
+                        </h3>
+
+
+                        <div class="progress-item">
+
+                            <div class="progress-label">
+
+                                <span>
+                                    Requests
+                                </span>
+
+                                <span id="requestStatusText">
+                                    Loading
+                                </span>
+
+                            </div>
+
+                            <div class="progress">
+
+                                <div class="progress-bar request-progress"></div>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="progress-item">
+
+                            <div class="progress-label">
+
+                                <span>
+                                    Approval Queue
+                                </span>
+
+                                <span id="approvalQueueStatus">
+                                    Loading
+                                </span>
+
+                            </div>
+
+                            <div class="progress">
+
+                                <div class="progress-bar supplier-progress"></div>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="progress-item">
+
+                            <div class="progress-label">
+
+                                <span>
+                                    System
+                                </span>
+
+                                <span>
+                                    Online
+                                </span>
+
+                            </div>
+
+                            <div class="progress">
+
+                                <div class="progress-bar request-progress"
+                                     style="width:100%;">
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+        </section>
+
+    </main>
+
+</div>
+
+<!-- =====================================================
+     PURCHASE REQUEST DETAILS MODAL
+     ===================================================== -->
+
+<div id="requestDetailsModal"
+     class="request-modal-overlay">
+
+    <div class="request-modal">
+
+
+        <!-- MODAL HEADER -->
+
+        <div class="request-modal-header">
+
+            <div>
+
+                <span class="request-modal-label">
+                    PURCHASE REQUEST
+                </span>
+
+                <h2 id="detailsRequestTitle">
+                    Purchase Request #--
+                </h2>
+
+                <p id="detailsRequestDate">
+                    Request date
+                </p>
+
+            </div>
+
+
+            <button type="button"
+                    class="request-modal-close"
+                    id="closeRequestModal">
+
+                ×
+
+            </button>
+
+        </div>
+
+
+
+        <!-- MODAL BODY -->
+
+        <div class="request-modal-body">
+
+
+            <!-- REQUEST INFORMATION -->
+
+            <div class="details-section">
+
+                <div class="details-section-title">
+                    REQUEST INFORMATION
+                </div>
+
+
+                <div class="details-info-grid">
+
+                    <div class="details-info-item">
+
+                        <span>
+                            Employee
+                        </span>
+
+                        <strong id="detailsEmployeeName">
+                            -
+                        </strong>
+
+                    </div>
+
+                    <div class="details-info-item">
+
+                        <span>
+                            Status
+                        </span>
+
+                        <strong id="detailsStatus"
+                                class="status-badge status-pending">
+
+                            PENDING
+
+                        </strong>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- PRODUCTS -->
+
+            <div class="details-section">
+
+                <div class="details-section-title">
+                    REQUESTED PRODUCTS
+                </div>
+
+
+                <div id="detailsProducts"
+                     class="details-products">
+
+                    <!-- Products will be inserted by JavaScript -->
+
+                </div>
+
+            </div>
+
+
+
+            <!-- DELIVERY ADDRESS -->
+
+            <div class="details-section">
+
+                <div class="details-section-title">
+                    DELIVERY INFORMATION
+                </div>
+
+
+                <div class="delivery-details-card">
+
+                    <div class="delivery-recipient">
+
+                        <strong id="detailsRecipientName">
+                            -
+                        </strong>
+
+                        <span id="detailsPhone">
+                            -
+                        </span>
+
+                    </div>
+
+
+                    <p id="detailsAddressLine1">
+                        -
+                    </p>
+
+                    <p id="detailsAddressLine2">
+                        -
+                    </p>
+
+
+                    <p id="detailsCityState">
+
+                        -
+
+                    </p>
+
+
+                    <p id="detailsCountry">
+                        -
+                    </p>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- ACTION AREA -->
+
+            <div id="detailsActionArea"
+                 class="request-details-actions">
+
+                <button type="button"
+                        id="detailsApproveBtn"
+                        class="details-approve-btn">
+
+                    ✓ Approve Request
+
+                </button>
+
+
+                <button type="button"
+                        id="detailsRejectBtn"
+                        class="details-reject-btn">
+
+                    ✕ Reject Request
+
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script src="../js/manager/manager-dashboard.js"></script>
+
+</body>
+
+</html>

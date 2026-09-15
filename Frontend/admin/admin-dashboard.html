@@ -1,0 +1,713 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>EPMS - Admin Dashboard</title>
+
+    <link rel="stylesheet" href="../css/admin-dashboard.css">
+</head>
+
+<body>
+
+<div class="dashboard-container">
+
+    <!-- =====================================================
+         SIDEBAR
+         ===================================================== -->
+
+    <aside class="sidebar">
+
+        <div class="logo">
+            <h1>EPMS</h1>
+            <span>Procurement System</span>
+        </div>
+
+        <nav class="sidebar-nav">
+
+            <a href="admin-dashboard.html"
+               class="nav-item active">
+                <span>▦</span>
+                Dashboard
+            </a>
+
+            <a href="admin-users.html"
+               class="nav-item">
+                <span>👥</span>
+                Users
+            </a>
+
+            <a href="admin-products.html"
+               class="nav-item">
+                <span>📦</span>
+                Products
+            </a>
+
+            <a href="admin-purchase-requests.html"
+               class="nav-item">
+                <span>📋</span>
+                Purchase Requests
+            </a>
+
+            <a href="admin-suppliers.html"
+               class="nav-item">
+                <span>🏢</span>
+                Suppliers
+            </a>
+
+            <a href="admin-deliveries.html"
+               class="nav-item">
+                <span>🚚</span>
+                Deliveries
+            </a>
+
+            <a href="admin-payments.html"
+               class="nav-item">
+                <span>💳</span>
+                Payments
+            </a>
+
+            <a href="admin-reports.html"
+               class="nav-item">
+                <span>📊</span>
+                Reports
+            </a>
+
+        </nav>
+
+        <!-- Admin Profile -->
+
+        <div class="user-card">
+
+            <div class="user-avatar"
+                 id="adminAvatar">
+                A
+            </div>
+
+            <div class="user-info">
+
+                <strong id="adminName">
+                    Administrator
+                </strong>
+
+                <span id="adminEmail">
+                    admin@epms.com
+                </span>
+
+            </div>
+
+        </div>
+
+        <!-- Logout -->
+
+        <button id="logoutBtn"
+                class="logout-btn">
+            🚪 Logout
+        </button>
+
+    </aside>
+
+
+    <!-- =====================================================
+         MAIN CONTENT
+         ===================================================== -->
+
+    <main class="main-content">
+
+
+        <!-- =================================================
+             TOPBAR
+             ================================================= -->
+
+        <header class="topbar">
+
+            <div>
+
+                <h2>
+                    Admin Dashboard
+                </h2>
+
+                <p id="currentStatus">
+                    System Operational
+                </p>
+
+            </div>
+
+
+            <div class="topbar-right">
+
+                <span class="role-badge">
+                    ADMIN
+                </span>
+
+            </div>
+
+        </header>
+
+
+        <!-- =================================================
+             CONTENT
+             ================================================= -->
+
+        <div class="dashboard-content">
+
+
+            <!-- =================================================
+                 WELCOME SECTION
+                 ================================================= -->
+
+            <section class="welcome-section">
+
+                <div>
+
+                    <h1>
+                        Welcome back,
+                        <span id="welcomeAdminName">
+                            Administrator
+                        </span>
+                        👋
+                    </h1>
+
+                    <p>
+                        Monitor and manage the Enterprise
+                        Procurement Management System.
+                    </p>
+
+                </div>
+
+            </section>
+
+
+            <!-- =================================================
+                 SUMMARY CARDS
+                 ================================================= -->
+
+            <section class="summary-grid">
+
+
+                <!-- Users -->
+
+                <div class="summary-card">
+
+                    <div class="summary-icon">
+                        👥
+                    </div>
+
+                    <div>
+
+                        <span>
+                            Total Users
+                        </span>
+
+                        <strong id="totalUsers">
+                            0
+                        </strong>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Products -->
+
+                <div class="summary-card">
+
+                    <div class="summary-icon">
+                        📦
+                    </div>
+
+                    <div>
+
+                        <span>
+                            Total Products
+                        </span>
+
+                        <strong id="totalProducts">
+                            0
+                        </strong>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Purchase Requests -->
+
+                <div class="summary-card">
+
+                    <div class="summary-icon">
+                        📋
+                    </div>
+
+                    <div>
+
+                        <span>
+                            Purchase Requests
+                        </span>
+
+                        <strong id="totalRequests">
+                            0
+                        </strong>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Suppliers -->
+
+                <div class="summary-card">
+
+                    <div class="summary-icon">
+                        🏢
+                    </div>
+
+                    <div>
+
+                        <span>
+                            Total Suppliers
+                        </span>
+
+                        <strong id="totalSuppliers">
+                            0
+                        </strong>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- =================================================
+                 SECONDARY STATISTICS
+                 ================================================= -->
+
+            <section class="secondary-grid">
+
+
+                <!-- Pending -->
+
+                <div class="stat-card">
+
+                    <div class="stat-header">
+
+                        <span>
+                            Pending Approvals
+                        </span>
+
+                        <span>
+                            ⏳
+                        </span>
+
+                    </div>
+
+                    <strong id="pendingRequests">
+                        0
+                    </strong>
+
+                    <small>
+                        Purchase requests waiting for approval
+                    </small>
+
+                </div>
+
+
+                <!-- Active Deliveries -->
+
+                <div class="stat-card">
+
+                    <div class="stat-header">
+
+                        <span>
+                            Active Deliveries
+                        </span>
+
+                        <span>
+                            🚚
+                        </span>
+
+                    </div>
+
+                    <strong id="activeDeliveries">
+                        0
+                    </strong>
+
+                    <small>
+                        Orders currently in delivery
+                    </small>
+
+                </div>
+
+
+                <!-- Completed Deliveries -->
+
+                <div class="stat-card">
+
+                    <div class="stat-header">
+
+                        <span>
+                            Completed Deliveries
+                        </span>
+
+                        <span>
+                            ✅
+                        </span>
+
+                    </div>
+
+                    <strong id="completedDeliveries">
+                        0
+                    </strong>
+
+                    <small>
+                        Successfully delivered orders
+                    </small>
+
+                </div>
+
+
+                <!-- Payments -->
+
+                <div class="stat-card">
+
+                    <div class="stat-header">
+
+                        <span>
+                            Total Payments
+                        </span>
+
+                        <span>
+                            💳
+                        </span>
+
+                    </div>
+
+                    <strong id="totalPayments">
+                        0
+                    </strong>
+
+                    <small>
+                        Payment records in system
+                    </small>
+
+                </div>
+
+            </section>
+
+
+            <!-- =================================================
+                 DASHBOARD GRID
+                 ================================================= -->
+
+            <section class="dashboard-grid">
+
+
+                <!-- =================================================
+                     RECENT PURCHASE REQUESTS
+                     ================================================= -->
+
+                <div class="content-card requests-card">
+
+                    <div class="card-header">
+
+                        <div>
+
+                            <h3>
+                                Recent Purchase Requests
+                            </h3>
+
+                            <p>
+                                Latest procurement requests
+                            </p>
+
+                        </div>
+
+                        <div class="request-controls">
+
+                            <button
+                                id="refreshRequestsBtn"
+                                class="refresh-btn">
+                                ↻ Refresh
+                            </button>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="table-container">
+
+                        <table class="data-table">
+
+                            <thead>
+
+                            <tr>
+
+                                <th>
+                                    ID
+                                </th>
+
+                                <th>
+                                    Employee
+                                </th>
+
+                                <th>
+                                    Product
+                                </th>
+
+                                <th>
+                                    Date
+                                </th>
+
+                                <th>
+                                    Status
+                                </th>
+
+                            </tr>
+
+                            </thead>
+
+
+                            <tbody id="requestTableBody">
+
+                            <tr>
+
+                                <td
+                                    colspan="5"
+                                    class="loading-cell">
+
+                                    Loading requests...
+
+                                </td>
+
+                            </tr>
+
+                            </tbody>
+
+                        </table>
+
+                    </div>
+
+                </div>
+
+
+                <!-- =================================================
+                     SYSTEM OVERVIEW
+                     ================================================= -->
+
+                <div class="content-card system-overview">
+
+                    <div class="card-header">
+
+                        <div>
+
+                            <h3>
+                                System Overview
+                            </h3>
+
+                            <p>
+                                Current platform status
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- Users -->
+
+                    <div class="overview-item">
+
+                        <div>
+
+                            <span>
+                                Users
+                            </span>
+
+                            <small>
+                                Registered accounts
+                            </small>
+
+                        </div>
+
+                        <strong id="overviewUsers">
+                            0
+                        </strong>
+
+                    </div>
+
+
+                    <!-- Suppliers -->
+
+                    <div class="overview-item">
+
+                        <div>
+
+                            <span>
+                                Suppliers
+                            </span>
+
+                            <small>
+                                Supplier profiles
+                            </small>
+
+                        </div>
+
+                        <strong id="overviewSuppliers">
+                            0
+                        </strong>
+
+                    </div>
+
+
+                    <!-- Products -->
+
+                    <div class="overview-item">
+
+                        <div>
+
+                            <span>
+                                Products
+                            </span>
+
+                            <small>
+                                Available products
+                            </small>
+
+                        </div>
+
+                        <strong id="overviewProducts">
+                            0
+                        </strong>
+
+                    </div>
+
+
+                    <!-- Requests -->
+
+                    <div class="overview-item">
+
+                        <div>
+
+                            <span>
+                                Requests
+                            </span>
+
+                            <small>
+                                Procurement requests
+                            </small>
+
+                        </div>
+
+                        <strong id="overviewRequests">
+                            0
+                        </strong>
+
+                    </div>
+
+
+                    <!-- System Status -->
+
+                    <div class="system-status">
+
+                        <span class="status-dot"></span>
+
+                        <span>
+                            All systems operational
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- =================================================
+                 PURCHASE REQUEST STATUS
+                 ================================================= -->
+
+            <section class="content-card status-section">
+
+                <div class="card-header">
+
+                    <div>
+
+                        <h3>
+                            Purchase Request Status
+                        </h3>
+
+                        <p>
+                            Overall procurement request distribution
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="status-grid">
+
+
+                    <div class="status-box pending">
+
+                        <span>
+                            Pending
+                        </span>
+
+                        <strong id="statusPending">
+                            0
+                        </strong>
+
+                    </div>
+
+
+                    <div class="status-box approved">
+
+                        <span>
+                            Approved
+                        </span>
+
+                        <strong id="statusApproved">
+                            0
+                        </strong>
+
+                    </div>
+
+
+                    <div class="status-box rejected">
+
+                        <span>
+                            Rejected
+                        </span>
+
+                        <strong id="statusRejected">
+                            0
+                        </strong>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+        </div>
+
+    </main>
+
+</div>
+
+
+<!-- =========================================================
+     ADMIN DASHBOARD JAVASCRIPT
+     ========================================================= -->
+
+<script src="../js/admin/admin-dashboard.js"></script>
+
+</body>
+
+</html>

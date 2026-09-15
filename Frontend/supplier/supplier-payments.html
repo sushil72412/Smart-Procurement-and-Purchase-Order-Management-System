@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Supplier Payments - EPMS</title>
+
+    <link rel="stylesheet"
+          href="../css/supplier-dashboard.css">
+
+</head>
+
+<body>
+
+<div class="dashboard-container">
+
+    <!-- SIDEBAR -->
+
+    <aside class="sidebar">
+
+        <div class="logo">
+
+            <h2>EPMS</h2>
+
+            <span>
+                Procurement System
+            </span>
+
+        </div>
+
+
+        <nav class="sidebar-nav">
+
+            <a href="supplier-dashboard.html"
+               class="nav-item">
+
+                <span class="nav-icon">▦</span>
+
+                Dashboard
+
+            </a>
+
+
+            <a href="supplier-orders.html"
+               class="nav-item">
+
+                <span class="nav-icon">📦</span>
+
+                Orders
+
+            </a>
+
+
+            <a href="supplier-deliveries.html"
+               class="nav-item">
+
+                <span class="nav-icon">🚚</span>
+
+                Shipments
+
+            </a>
+
+
+            <a href="supplier-payments.html"
+               class="nav-item active">
+
+                <span class="nav-icon">💳</span>
+
+                Payments
+
+            </a>
+
+
+            <a href="supplier-reports.html"
+               class="nav-item">
+
+                <span class="nav-icon">📊</span>
+
+                Reports
+
+            </a>
+
+        </nav>
+
+
+        <!-- USER CARD -->
+
+        <div class="user-card">
+
+            <div class="user-avatar"
+                 id="supplierAvatar">
+
+                S
+
+            </div>
+
+
+            <div class="user-info">
+
+                <strong id="supplierName">
+                    Supplier
+                </strong>
+
+                <span id="supplierEmail">
+                    supplier@email.com
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <!-- LOGOUT -->
+
+        <button
+            type="button"
+            id="logoutBtn"
+            class="logout-btn">
+
+            Logout
+
+        </button>
+
+    </aside>
+
+
+
+    <!-- MAIN CONTENT -->
+
+    <main class="main-content">
+
+
+        <!-- TOPBAR -->
+
+        <header class="topbar">
+
+            <div>
+
+                <h1>
+                    Supplier Payments
+                </h1>
+
+                <p>
+                    View payment information for your orders
+                </p>
+
+            </div>
+
+
+            <div class="topbar-user">
+
+                <span class="role-badge">
+                    SUPPLIER
+                </span>
+
+            </div>
+
+        </header>
+
+
+
+        <!-- PAGE HEADER -->
+
+        <section class="welcome-section">
+
+            <div>
+
+                <h2>
+                    Payment Overview
+                </h2>
+
+                <p>
+                    Review payment transactions related to your supplier orders.
+                </p>
+
+            </div>
+
+
+            <button
+                type="button"
+                id="refreshPaymentsBtn"
+                class="refresh-btn">
+
+                ↻ Refresh
+
+            </button>
+
+        </section>
+
+
+
+        <!-- SUMMARY -->
+
+        <section class="summary-grid">
+
+
+            <div class="summary-card">
+
+                <div class="summary-icon">
+                    💳
+                </div>
+
+                <div class="summary-content">
+
+                    <span>
+                        Total Payments
+                    </span>
+
+                    <strong id="totalPayments">
+                        0
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+
+            <div class="summary-card">
+
+                <div class="summary-icon">
+                    ⏳
+                </div>
+
+                <div class="summary-content">
+
+                    <span>
+                        Pending
+                    </span>
+
+                    <strong id="pendingPayments">
+                        0
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+
+            <div class="summary-card">
+
+                <div class="summary-icon">
+                    ✅
+                </div>
+
+                <div class="summary-content">
+
+                    <span>
+                        Paid
+                    </span>
+
+                    <strong id="paidPayments">
+                        0
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+
+            <div class="summary-card">
+
+                <div class="summary-icon">
+                    ₹
+                </div>
+
+                <div class="summary-content">
+
+                    <span>
+                        Total Amount
+                    </span>
+
+                    <strong id="totalAmount">
+                        ₹0
+                    </strong>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- PAYMENTS TABLE -->
+
+        <section class="orders-section">
+
+
+            <div class="section-header">
+
+                <div>
+
+                    <h2>
+                        Payment Transactions
+                    </h2>
+
+                    <p>
+                        Payment records associated with your orders.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- LOADING -->
+
+            <div
+                id="paymentsLoading"
+                class="loading-state">
+
+                Loading payments...
+
+            </div>
+
+
+
+            <!-- TABLE -->
+
+            <div class="table-wrapper">
+
+                <table class="order-table">
+
+                    <thead>
+
+                    <tr>
+
+                        <th>
+                            Payment ID
+                        </th>
+
+                        <th>
+                            Purchase Request
+                        </th>
+
+                        <th>
+                            Amount
+                        </th>
+
+                        <th>
+                            Method
+                        </th>
+
+                        <th>
+                            Status
+                        </th>
+
+                        <th>
+                            Payment Date
+                        </th>
+
+                    </tr>
+
+                    </thead>
+
+
+                    <tbody id="paymentTableBody">
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+
+
+            <!-- EMPTY STATE -->
+
+            <div
+                id="emptyPayments"
+                class="empty-state">
+
+                <div class="empty-icon">
+                    💳
+                </div>
+
+                <h3>
+                    No Payments Found
+                </h3>
+
+                <p>
+                    Payment transactions will appear here.
+                </p>
+
+            </div>
+
+
+        </section>
+
+
+
+    </main>
+
+</div>
+
+
+<script src="../js/supplier/supplier-payments.js"></script>
+
+</body>
+
+</html>

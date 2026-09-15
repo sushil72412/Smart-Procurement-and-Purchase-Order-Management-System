@@ -74,13 +74,6 @@ public class PurchaseRequestServiceImpl
             );
         }
 
-        // Employee can create request only for themselves
-        if (!currentUser.getId().equals(request.getUserId())) {
-            throw new RuntimeException(
-                    "You can only create purchase requests for yourself."
-            );
-        }
-
         User user = currentUser;
 
         // continue with your existing code...

@@ -1,0 +1,713 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>EPMS - Reports</title>
+
+    <link rel="stylesheet"
+          href="../css/reports.css">
+
+</head>
+
+<body>
+
+<div class="dashboard-container">
+
+    <!-- =====================================================
+         SIDEBAR
+         ===================================================== -->
+
+    <aside class="sidebar">
+
+        <!-- LOGO -->
+
+        <div class="logo">
+
+            <div class="logo-icon">
+                EP
+            </div>
+
+            <div>
+                <h2>EPMS</h2>
+                <span>Enterprise Procurement</span>
+            </div>
+
+        </div>
+
+
+        <!-- NAVIGATION -->
+
+        <nav class="sidebar-nav">
+
+            <a href="manager-dashboard.html"
+               class="nav-item">
+
+                <span class="nav-icon">▦</span>
+                <span>Dashboard</span>
+
+            </a>
+
+
+            <a href="purchase-requests.html"
+               class="nav-item">
+
+                <span class="nav-icon">▤</span>
+                <span>Purchase Requests</span>
+
+            </a>
+
+
+            <a href="manager-products.html"
+               class="nav-item">
+
+                <span class="nav-icon">📦</span>
+                <span>Products</span>
+
+            </a>
+
+
+            <a href="manager-deliveries.html"
+               class="nav-item">
+
+                <span class="nav-icon">🚚</span>
+                <span>Deliveries</span>
+
+            </a>
+
+
+            <a href="manager-payments.html"
+               class="nav-item">
+
+                <span class="nav-icon">💳</span>
+                <span>Payments</span>
+
+            </a>
+
+
+            <a href="reports.html"
+               class="nav-item active">
+
+                <span class="nav-icon">📊</span>
+                <span>Reports</span>
+
+            </a>
+
+        </nav>
+
+
+        <!-- USER SECTION -->
+
+        <div class="sidebar-bottom">
+
+            <div class="user-card">
+
+                <div class="user-avatar">
+                    M
+                </div>
+
+                <div class="user-info">
+
+                    <strong id="managerName">
+                        Manager
+                    </strong>
+
+                    <small id="managerEmail">
+                        manager@email.com
+                    </small>
+
+                </div>
+
+            </div>
+
+
+            <button type="button"
+                    id="logoutBtn"
+                    class="logout-btn">
+
+                <span>↪</span>
+                <span>Sign out</span>
+
+            </button>
+
+        </div>
+
+    </aside>
+
+
+
+    <!-- =====================================================
+         MAIN CONTENT
+         ===================================================== -->
+
+    <main class="main-content">
+
+
+        <!-- TOPBAR -->
+
+        <header class="topbar">
+
+            <div class="breadcrumb">
+
+                <span class="breadcrumb-icon">
+                    /
+                </span>
+
+                <strong>
+                    Reports
+                </strong>
+
+            </div>
+
+
+            <div class="topbar-right">
+
+                <div class="system-status">
+
+                    <span class="status-dot"></span>
+
+                    SYSTEM OPERATIONAL
+
+                </div>
+
+
+                <div class="profile-avatar"
+                     id="topProfileAvatar">
+
+                    M
+
+                </div>
+
+            </div>
+
+        </header>
+
+
+
+        <!-- =================================================
+             REPORT CONTENT
+             ================================================= -->
+
+        <section class="reports-container">
+
+
+            <!-- WELCOME -->
+
+            <section class="welcome-section">
+
+                <div>
+
+                    <div class="greeting">
+                        PROCUREMENT ANALYTICS
+                    </div>
+
+                    <h1>
+                        Reports
+                    </h1>
+
+                    <p class="subtitle">
+                        Analyze procurement requests and approval activity.
+                    </p>
+
+                </div>
+
+
+                <div class="report-actions">
+
+                    <button type="button"
+                            id="refreshReportsBtn"
+                            class="refresh-btn">
+
+                        ↻ Refresh
+
+                    </button>
+
+                </div>
+
+            </section>
+
+
+
+            <!-- =================================================
+                 SUMMARY CARDS
+                 ================================================= -->
+
+            <section class="summary-grid">
+
+
+                <!-- TOTAL -->
+
+                <div class="summary-card">
+
+                    <div class="card-icon">
+                        📋
+                    </div>
+
+                    <span class="card-label">
+                        TOTAL REQUESTS
+                    </span>
+
+                    <h2 id="totalRequests">
+                        0
+                    </h2>
+
+                    <p>
+                        All purchase requests
+                    </p>
+
+                </div>
+
+
+                <!-- PENDING -->
+
+                <div class="summary-card pending-card">
+
+                    <div class="card-icon">
+                        ⏳
+                    </div>
+
+                    <span class="card-label">
+                        PENDING
+                    </span>
+
+                    <h2 id="pendingRequests">
+                        0
+                    </h2>
+
+                    <p>
+                        Awaiting approval
+                    </p>
+
+                </div>
+
+
+                <!-- APPROVED -->
+
+                <div class="summary-card approved-card">
+
+                    <div class="card-icon">
+                        ✓
+                    </div>
+
+                    <span class="card-label">
+                        APPROVED
+                    </span>
+
+                    <h2 id="approvedRequests">
+                        0
+                    </h2>
+
+                    <p>
+                        Successfully approved
+                    </p>
+
+                </div>
+
+
+                <!-- REJECTED -->
+
+                <div class="summary-card rejected-card">
+
+                    <div class="card-icon">
+                        ✕
+                    </div>
+
+                    <span class="card-label">
+                        REJECTED
+                    </span>
+
+                    <h2 id="rejectedRequests">
+                        0
+                    </h2>
+
+                    <p>
+                        Rejected requests
+                    </p>
+
+                </div>
+
+            </section>
+
+
+
+            <!-- =================================================
+                 REPORT GRID
+                 ================================================= -->
+
+            <section class="report-grid">
+
+
+                <!-- STATUS REPORT -->
+
+                <div class="report-card">
+
+                    <div class="report-card-header">
+
+                        <div>
+
+                            <span class="report-label">
+                                REQUEST ANALYSIS
+                            </span>
+
+                            <h2>
+                                Request Status
+                            </h2>
+
+                        </div>
+
+                        <div class="report-icon">
+                            📊
+                        </div>
+
+                    </div>
+
+
+                    <div class="status-report">
+
+                        <div class="status-row">
+
+                            <div class="status-row-info">
+
+                                <span class="status-dot-small pending-dot"></span>
+
+                                <span>
+                                    Pending
+                                </span>
+
+                            </div>
+
+                            <strong id="pendingPercent">
+                                0%
+                            </strong>
+
+                        </div>
+
+
+                        <div class="report-progress">
+
+                            <div id="pendingProgress"
+                                 class="progress-fill pending-fill">
+                            </div>
+
+                        </div>
+
+
+
+                        <div class="status-row">
+
+                            <div class="status-row-info">
+
+                                <span class="status-dot-small approved-dot"></span>
+
+                                <span>
+                                    Approved
+                                </span>
+
+                            </div>
+
+                            <strong id="approvedPercent">
+                                0%
+                            </strong>
+
+                        </div>
+
+
+                        <div class="report-progress">
+
+                            <div id="approvedProgress"
+                                 class="progress-fill approved-fill">
+                            </div>
+
+                        </div>
+
+
+
+                        <div class="status-row">
+
+                            <div class="status-row-info">
+
+                                <span class="status-dot-small rejected-dot"></span>
+
+                                <span>
+                                    Rejected
+                                </span>
+
+                            </div>
+
+                            <strong id="rejectedPercent">
+                                0%
+                            </strong>
+
+                        </div>
+
+
+                        <div class="report-progress">
+
+                            <div id="rejectedProgress"
+                                 class="progress-fill rejected-fill">
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- APPROVAL OVERVIEW -->
+
+                <div class="report-card">
+
+                    <div class="report-card-header">
+
+                        <div>
+
+                            <span class="report-label">
+                                APPROVAL OVERVIEW
+                            </span>
+
+                            <h2>
+                                Procurement Activity
+                            </h2>
+
+                        </div>
+
+                        <div class="report-icon">
+                            ✓
+                        </div>
+
+                    </div>
+
+
+                    <div class="activity-list">
+
+
+                        <div class="activity-item">
+
+                            <div class="activity-icon">
+                                📋
+                            </div>
+
+                            <div>
+
+                                <strong>
+                                    Total Requests
+                                </strong>
+
+                                <span>
+                                    Complete request volume
+                                </span>
+
+                            </div>
+
+                            <b id="activityTotal">
+                                0
+                            </b>
+
+                        </div>
+
+
+
+                        <div class="activity-item">
+
+                            <div class="activity-icon pending">
+                                ⏳
+                            </div>
+
+                            <div>
+
+                                <strong>
+                                    Pending Reviews
+                                </strong>
+
+                                <span>
+                                    Requests requiring action
+                                </span>
+
+                            </div>
+
+                            <b id="activityPending">
+                                0
+                            </b>
+
+                        </div>
+
+
+
+                        <div class="activity-item">
+
+                            <div class="activity-icon approved">
+                                ✓
+                            </div>
+
+                            <div>
+
+                                <strong>
+                                    Approved
+                                </strong>
+
+                                <span>
+                                    Approved procurement requests
+                                </span>
+
+                            </div>
+
+                            <b id="activityApproved">
+                                0
+                            </b>
+
+                        </div>
+
+
+
+                        <div class="activity-item">
+
+                            <div class="activity-icon rejected">
+                                ✕
+                            </div>
+
+                            <div>
+
+                                <strong>
+                                    Rejected
+                                </strong>
+
+                                <span>
+                                    Rejected procurement requests
+                                </span>
+
+                            </div>
+
+                            <b id="activityRejected">
+                                0
+                            </b>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+<!-- =================================================
+     MOST REQUESTED PRODUCTS
+     ================================================= -->
+
+<section class="product-report-card">
+
+    <div class="report-card-header">
+
+        <div>
+
+            <span class="report-label">
+                PRODUCT ANALYSIS
+            </span>
+
+            <h2>
+                Most Requested Products
+            </h2>
+
+        </div>
+
+        <div class="report-icon">
+            📦
+        </div>
+
+    </div>
+
+
+    <div id="productReportList"
+         class="product-report-list">
+
+        <div class="product-report-empty">
+            Loading product data...
+        </div>
+
+    </div>
+
+</section>
+
+<!-- =================================================
+     EMPLOYEE-WISE PROCUREMENT
+     ================================================= -->
+
+<section class="product-report-card">
+
+    <div class="report-card-header">
+
+        <div>
+
+            <span class="report-label">
+                EMPLOYEE ANALYSIS
+            </span>
+
+            <h2>
+                Employee-wise Procurement
+            </h2>
+
+        </div>
+
+        <div class="report-icon">
+            👥
+        </div>
+
+    </div>
+
+
+    <div id="employeeReportList"
+         class="product-report-list">
+
+        <div class="product-report-empty">
+            Loading employee data...
+        </div>
+
+    </div>
+
+</section>
+
+            <!-- =================================================
+                 REPORT INFORMATION
+                 ================================================= -->
+
+            <section class="information-card">
+
+                <div class="information-icon">
+                    ℹ
+                </div>
+
+                <div>
+
+                    <h3>
+                        Procurement Report
+                    </h3>
+
+                    <p>
+                        This report is generated from purchase request
+                        activity available to the manager. Detailed
+                        financial reporting can be added when dedicated
+                        reporting APIs are introduced.
+                    </p>
+
+                </div>
+
+            </section>
+
+        </section>
+
+    </main>
+
+</div>
+
+
+<script src="../js/manager/reports.js"></script>
+
+</body>
+
+</html>

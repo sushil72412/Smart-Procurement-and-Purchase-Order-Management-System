@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>EPMS - Products</title>
+
+    <link rel="stylesheet"
+          href="../css/products.css">
+
+</head>
+
+
+<body>
+
+    <div class="dashboard-layout">
+
+
+        <!-- =====================================================
+             SIDEBAR
+             ===================================================== -->
+
+        <aside class="sidebar">
+
+            <div class="brand">
+
+                <div class="brand-logo">
+                    EP
+                </div>
+
+                <div>
+                    <h2>EPMS</h2>
+                    <span>Enterprise Procurement</span>
+                </div>
+
+            </div>
+
+
+            <!-- =================================================
+                 EMPLOYEE NAVIGATION
+                 ================================================= -->
+
+            <nav class="sidebar-nav">
+
+                <div class="nav-section-title">
+                    MAIN MENU
+                </div>
+
+
+                <a href="dashboard.html"
+                   class="nav-item">
+
+                    <span>▦</span>
+                    <span>Overview</span>
+
+                </a>
+
+
+                <a href="purchase-requests.html"
+                   class="nav-item">
+
+                    <span>▤</span>
+                    <span>Purchase Requests</span>
+
+                </a>
+
+
+                <a href="products.html"
+                   class="nav-item active">
+
+                    <span>▣</span>
+                    <span>Products</span>
+
+                </a>
+
+
+                <a href="deliveries.html"
+                   class="nav-item">
+
+                    <span>▱</span>
+                    <span>Deliveries</span>
+
+                </a>
+
+
+                <a href="payments.html"
+                   class="nav-item">
+
+                    <span>₹</span>
+                    <span>Payments</span>
+
+                </a>
+
+
+                <a href="ratings.html"
+                   class="nav-item">
+
+                    <span>★</span>
+                    <span>Ratings</span>
+
+                </a>
+
+            </nav>
+
+
+            <!-- =================================================
+                 SIDEBAR BOTTOM
+                 ================================================= -->
+
+            <div class="sidebar-bottom">
+
+                <div class="user-info">
+
+                    <div class="user-avatar"
+                         id="userAvatar">
+                        U
+                    </div>
+
+                    <div>
+
+                        <strong id="userName">
+                            User
+                        </strong>
+
+                        <span id="userRole">
+                            EMPLOYEE
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <a href="#"
+                   id="logoutButton"
+                   class="logout-button">
+
+                    ↪ Sign out
+
+                </a>
+
+            </div>
+
+        </aside>
+
+
+        <!-- =====================================================
+             MAIN CONTENT
+             ===================================================== -->
+
+        <main class="main-content">
+
+
+            <!-- =================================================
+                 HEADER
+                 ================================================= -->
+
+            <header class="topbar">
+
+                <div class="page-title">
+
+                    <span>/</span>
+
+                    <strong>
+                        Products
+                    </strong>
+
+                </div>
+
+
+                <div class="system-status">
+
+                    <span class="status-dot"></span>
+
+                    SYSTEM OPERATIONAL
+
+                </div>
+
+            </header>
+
+
+            <!-- =================================================
+                 CONTENT
+                 ================================================= -->
+
+            <section class="content-area">
+
+                <div class="page-heading">
+
+                    <div>
+
+                        <p class="eyebrow">
+                            ENTERPRISE PROCUREMENT MANAGEMENT
+                        </p>
+
+                        <h1>
+                            Available Products
+                        </h1>
+
+                        <p>
+                            Browse products available for procurement.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <!-- =================================================
+                     PRODUCTS CONTAINER
+                     ================================================= -->
+
+                <div id="productsContainer"
+                     class="products-container">
+
+                    <p>
+                        Loading products...
+                    </p>
+
+                </div>
+
+            </section>
+
+        </main>
+
+    </div>
+
+
+    <!-- =========================================================
+         JAVASCRIPT
+         ========================================================= -->
+
+    <script src="../js/employee/products.js"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Admin Reports - EPMS</title>
+
+    <link rel="stylesheet" href="../css/admin-dashboard.css">
+</head>
+
+<body>
+
+<div class="dashboard-container">
+
+    <!-- =====================================================
+         SIDEBAR
+         ===================================================== -->
+
+    <aside class="sidebar">
+
+        <div class="logo">
+            <h1>EPMS</h1>
+            <span>Procurement System</span>
+        </div>
+
+        <nav class="sidebar-nav">
+
+            <a href="admin-dashboard.html"
+               class="nav-item">
+                <span>▦</span>
+                Dashboard
+            </a>
+
+            <a href="admin-users.html"
+               class="nav-item">
+                <span>👥</span>
+                Users
+            </a>
+
+            <a href="admin-products.html"
+               class="nav-item">
+                <span>📦</span>
+                Products
+            </a>
+
+            <a href="admin-purchase-requests.html"
+               class="nav-item">
+                <span>📋</span>
+                Purchase Requests
+            </a>
+
+            <a href="admin-suppliers.html"
+               class="nav-item">
+                <span>🏢</span>
+                Suppliers
+            </a>
+
+            <a href="admin-deliveries.html"
+               class="nav-item">
+                <span>🚚</span>
+                Deliveries
+            </a>
+
+            <a href="admin-payments.html"
+               class="nav-item">
+                <span>💳</span>
+                Payments
+            </a>
+
+            <a href="admin-reports.html"
+               class="nav-item active">
+                <span>📊</span>
+                Reports
+            </a>
+
+        </nav>
+
+
+        <!-- ADMIN PROFILE -->
+
+        <div class="user-card">
+
+            <div class="user-avatar"
+                 id="adminAvatar">
+                A
+            </div>
+
+            <div class="user-info">
+
+                <strong id="adminName">
+                    Administrator
+                </strong>
+
+                <span id="adminEmail">
+                    admin@epms.com
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <!-- LOGOUT -->
+
+        <button id="logoutBtn"
+                class="logout-btn">
+            🚪 Logout
+        </button>
+
+    </aside>
+
+
+    <!-- =====================================================
+         MAIN CONTENT
+         ===================================================== -->
+
+    <main class="main-content">
+
+        <!-- TOPBAR -->
+
+        <header class="topbar">
+
+            <div>
+
+                <h2>
+                    Reports
+                </h2>
+
+                <p id="currentStatus">
+                    EPMS system reports and analytics
+                </p>
+
+            </div>
+
+
+            <div class="topbar-right">
+
+                <span class="role-badge">
+                    ADMIN
+                </span>
+
+            </div>
+
+        </header>
+
+
+        <!-- =================================================
+             REPORTS
+             ================================================= -->
+
+        <section class="content-card"
+                 id="reports-management">
+
+            <div class="card-header">
+
+                <div>
+
+                    <h3>
+                        System Reports
+                    </h3>
+
+                    <p>
+                        View procurement system statistics
+                    </p>
+
+                </div>
+
+                <button
+                    id="refreshReportsBtn"
+                    class="refresh-btn">
+
+                    ↻ Refresh
+
+                </button>
+
+            </div>
+
+
+            <!-- =================================================
+                 REPORT SUMMARY
+                 ================================================= -->
+
+            <div class="stats-grid">
+
+                <div class="stat-card">
+
+                    <div class="stat-icon">
+                        👥
+                    </div>
+
+                    <div class="stat-info">
+
+                        <span>
+                            Total Users
+                        </span>
+
+                        <strong id="totalUsers">
+                            -
+                        </strong>
+
+                    </div>
+
+                </div>
+
+
+                <div class="stat-card">
+
+                    <div class="stat-icon">
+                        📦
+                    </div>
+
+                    <div class="stat-info">
+
+                        <span>
+                            Total Products
+                        </span>
+
+                        <strong id="totalProducts">
+                            -
+                        </strong>
+
+                    </div>
+
+                </div>
+
+
+                <div class="stat-card">
+
+                    <div class="stat-icon">
+                        📋
+                    </div>
+
+                    <div class="stat-info">
+
+                        <span>
+                            Purchase Requests
+                        </span>
+
+                        <strong id="totalRequests">
+                            -
+                        </strong>
+
+                    </div>
+
+                </div>
+
+
+                <div class="stat-card">
+
+                    <div class="stat-icon">
+                        🏢
+                    </div>
+
+                    <div class="stat-info">
+
+                        <span>
+                            Suppliers
+                        </span>
+
+                        <strong id="totalSuppliers">
+                            -
+                        </strong>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- =================================================
+                 SECONDARY REPORTS
+                 ================================================= -->
+
+            <div class="stats-grid">
+
+                <div class="stat-card">
+
+                    <div class="stat-icon">
+                        ⏳
+                    </div>
+
+                    <div class="stat-info">
+
+                        <span>
+                            Pending Requests
+                        </span>
+
+                        <strong id="pendingRequests">
+                            -
+                        </strong>
+
+                    </div>
+
+                </div>
+
+
+                <div class="stat-card">
+
+                    <div class="stat-icon">
+                        🚚
+                    </div>
+
+                    <div class="stat-info">
+
+                        <span>
+                            Active Deliveries
+                        </span>
+
+                        <strong id="activeDeliveries">
+                            -
+                        </strong>
+
+                    </div>
+
+                </div>
+
+
+                <div class="stat-card">
+
+                    <div class="stat-icon">
+                        ✅
+                    </div>
+
+                    <div class="stat-info">
+
+                        <span>
+                            Completed Deliveries
+                        </span>
+
+                        <strong id="completedDeliveries">
+                            -
+                        </strong>
+
+                    </div>
+
+                </div>
+
+
+                <div class="stat-card">
+
+                    <div class="stat-icon">
+                        💳
+                    </div>
+
+                    <div class="stat-info">
+
+                        <span>
+                            Payments
+                        </span>
+
+                        <strong id="totalPayments">
+                            -
+                        </strong>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- =================================================
+                 REQUEST STATUS REPORT
+                 ================================================= -->
+
+            <div class="report-block">
+
+                <div class="report-block-header">
+
+                    <div>
+
+                        <h3>
+                            Purchase Request Status
+                        </h3>
+
+                        <p>
+                            Breakdown of purchase request statuses
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="report-list">
+
+                    <div class="report-row">
+
+                        <span>
+                            Pending
+                        </span>
+
+                        <strong id="reportPending">
+                            0
+                        </strong>
+
+                    </div>
+
+
+                    <div class="report-row">
+
+                        <span>
+                            Approved
+                        </span>
+
+                        <strong id="reportApproved">
+                            0
+                        </strong>
+
+                    </div>
+
+
+                    <div class="report-row">
+
+                        <span>
+                            Rejected
+                        </span>
+
+                        <strong id="reportRejected">
+                            0
+                        </strong>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- =================================================
+                 DELIVERY STATUS REPORT
+                 ================================================= -->
+
+            <div class="report-block">
+
+                <div class="report-block-header">
+
+                    <div>
+
+                        <h3>
+                            Delivery Status
+                        </h3>
+
+                        <p>
+                            Current delivery status breakdown
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="report-list">
+
+                    <div class="report-row">
+
+                        <span>
+                            Pending
+                        </span>
+
+                        <strong id="reportDeliveryPending">
+                            0
+                        </strong>
+
+                    </div>
+
+
+                    <div class="report-row">
+
+                        <span>
+                            In Transit
+                        </span>
+
+                        <strong id="reportDeliveryTransit">
+                            0
+                        </strong>
+
+                    </div>
+
+
+                    <div class="report-row">
+
+                        <span>
+                            Delivered
+                        </span>
+
+                        <strong id="reportDeliveryCompleted">
+                            0
+                        </strong>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+</div>
+
+
+<!-- =========================================================
+     JAVASCRIPT
+     ========================================================= -->
+
+<script src="../js/admin/admin-reports.js"></script>
+
+</body>
+</html>

@@ -779,7 +779,8 @@ button {
     background: rgba(15, 25, 35, 0.55);
     align-items: center;
     justify-content: center;
-    padding: 20px;
+    margin: 10px;
+    padding: 25px;
 }
 
 .modal-overlay.show {

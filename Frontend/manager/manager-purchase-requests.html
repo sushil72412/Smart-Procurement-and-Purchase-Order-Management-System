@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>EPMS - Manager Purchase Requests</title>
+
+    <link rel="stylesheet"
+        href="../css/dashboard.css">
+
+</head>
+
+<body>
+
+<aside class="sidebar">
+
+    <div class="logo">
+
+        <div class="logo-icon">
+            EP
+        </div>
+
+        <div>
+            <h2>EPMS</h2>
+            <span>Enterprise Procurement</span>
+        </div>
+
+    </div>
+
+
+    <div class="sidebar-section">
+
+        <div class="section-title">
+            MAIN
+        </div>
+
+        <a href="manager-dashboard.html"
+           class="nav-item">
+
+            <span>▦</span>
+            <span>Dashboard</span>
+
+        </a>
+
+        <a href="manager-purchase-requests.html"
+           class="nav-item active">
+
+            <span>▤</span>
+            <span>Purchase Requests</span>
+
+        </a>
+
+        <a href="manager-products.html"
+           class="nav-item">
+
+            <span>▣</span>
+            <span>Products</span>
+
+        </a>
+
+        <a href="manager-deliveries.html"
+           class="nav-item">
+
+            <span>▱</span>
+            <span>Deliveries</span>
+
+        </a>
+
+        <a href="manager-payments.html"
+           class="nav-item">
+
+            <span>₹</span>
+            <span>Payments</span>
+
+        </a>
+
+        <a href="reports.html"
+           class="nav-item">
+
+            <span>📊</span>
+            <span>Reports</span>
+
+        </a>
+
+    </div>
+
+
+    <div class="sidebar-section">
+
+        <div class="section-title">
+            SUPPORT
+        </div>
+
+        <a href="settings.html"
+           class="nav-item">
+
+            <span>⚙</span>
+            <span>Settings</span>
+
+        </a>
+
+        <a href="support.html"
+           class="nav-item">
+
+            <span>?</span>
+            <span>Support</span>
+
+        </a>
+
+    </div>
+
+
+    <div class="sidebar-bottom">
+
+        <div class="user-card">
+
+            <div class="user-avatar">
+                U
+            </div>
+
+            <div class="user-info">
+
+                <div id="userEmail">
+                    User
+                </div>
+
+                <span id="userRole">
+                    MANAGER
+                </span>
+
+            </div>
+
+        </div>
+
+        <button type="button"
+                id="logoutButton"
+                class="logout-btn">
+
+            Logout
+
+        </button>
+
+    </div>
+
+</aside>
+
+
+<main class="main-content">
+
+    <header class="topbar">
+
+        <div class="breadcrumb">
+
+            <span class="breadcrumb-icon">
+                ▤
+            </span>
+
+            <span>
+                Purchase Requests
+            </span>
+
+        </div>
+
+        <div class="topbar-right">
+
+            <div class="system-status">
+
+                <span class="status-dot"></span>
+
+                System Operational
+
+            </div>
+
+            <div class="profile-avatar">
+                U
+            </div>
+
+        </div>
+
+    </header>
+
+
+    <div class="dashboard-container">
+
+        <section class="welcome-section">
+
+            <div>
+
+                <div class="greeting">
+                    PURCHASE REQUEST MANAGEMENT
+                </div>
+
+                <h1>
+                    All Purchase Requests
+                </h1>
+
+                <p class="subtitle">
+                    Review and manage purchase requests across the procurement system.
+                </p>
+
+            </div>
+
+        </section>
+
+
+        <section>
+
+            <div id="requestsContainer">
+
+                <p>
+                    Loading purchase requests...
+                </p>
+
+            </div>
+
+        </section>
+
+    </div>
+
+</main>
+
+
+<script src="../js/manager/manager-purchase-requests.js"></script>
+
+</body>
+
+</html>

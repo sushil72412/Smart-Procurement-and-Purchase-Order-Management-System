@@ -148,7 +148,7 @@ document.addEventListener("DOMContentLoaded", function () {
                         case "ADMIN":
 
                             window.location.href =
-                                "admin-dashboard.html";
+                                "admin/admin-dashboard.html";
 
                             break;
 
@@ -156,7 +156,7 @@ document.addEventListener("DOMContentLoaded", function () {
                         case "MANAGER":
 
                             window.location.href =
-                                "manager-dashboard.html";
+                                "manager/manager-dashboard.html";
 
                             break;
 
@@ -164,7 +164,7 @@ document.addEventListener("DOMContentLoaded", function () {
                         case "SUPPLIER":
 
                             window.location.href =
-                                "supplier-dashboard.html";
+                                "supplier/supplier-dashboard.html";
 
                             break;
 
@@ -172,7 +172,7 @@ document.addEventListener("DOMContentLoaded", function () {
                         case "EMPLOYEE":
 
                             window.location.href =
-                                "dashboard.html";
+                                "employee/dashboard.html";
 
                             break;
 

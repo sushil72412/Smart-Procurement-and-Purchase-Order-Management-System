@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>EPMS - Manager Payments</title>
+
+    <link rel="stylesheet"
+          href="../css/dashboard.css">
+
+    <link rel="stylesheet"
+          href="../css/payments.css">
+
+</head>
+
+
+<body>
+
+
+<!-- =====================================================
+     MANAGER SIDEBAR
+     ===================================================== -->
+
+<aside class="sidebar">
+
+    <div class="logo">
+
+        <div class="logo-icon">
+            EP
+        </div>
+
+        <div>
+            <h2>EPMS</h2>
+            <span>Enterprise Procurement</span>
+        </div>
+
+    </div>
+
+
+    <!-- MAIN MENU -->
+
+    <div class="sidebar-section">
+
+        <div class="section-title">
+            MAIN
+        </div>
+
+
+        <a href="manager-dashboard.html"
+           class="nav-item">
+
+            <span>▦</span>
+            <span>Dashboard</span>
+
+        </a>
+
+
+        <a href="manager-purchase-requests.html"
+           class="nav-item">
+
+            <span>▤</span>
+            <span>Purchase Requests</span>
+
+        </a>
+
+
+        <a href="manager-products.html"
+           class="nav-item">
+
+            <span>▣</span>
+            <span>Products</span>
+
+        </a>
+
+
+        <a href="manager-deliveries.html"
+           class="nav-item">
+
+            <span>▱</span>
+            <span>Deliveries</span>
+
+        </a>
+
+
+        <a href="manager-payments.html"
+           class="nav-item active">
+
+            <span>₹</span>
+            <span>Payments</span>
+
+        </a>
+
+
+        <a href="reports.html"
+           class="nav-item">
+
+            <span>📊</span>
+            <span>Reports</span>
+
+        </a>
+
+    </div>
+
+
+    <!-- SUPPORT -->
+
+    <div class="sidebar-section">
+
+        <div class="section-title">
+            SUPPORT
+        </div>
+
+
+        <a href="settings.html"
+           class="nav-item">
+
+            <span>⚙</span>
+            <span>Settings</span>
+
+        </a>
+
+
+        <a href="support.html"
+           class="nav-item">
+
+            <span>?</span>
+            <span>Support</span>
+
+        </a>
+
+    </div>
+
+
+    <!-- USER -->
+
+    <div class="sidebar-bottom">
+
+        <div class="user-card">
+
+            <div class="user-avatar"
+                 id="userAvatar">
+
+                U
+
+            </div>
+
+
+            <div class="user-info">
+
+                <div id="userEmail">
+                    User
+                </div>
+
+                <span id="userRole">
+                    MANAGER
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <button type="button"
+                id="logoutButton"
+                class="logout-btn">
+
+            Logout
+
+        </button>
+
+    </div>
+
+</aside>
+
+
+<!-- =====================================================
+     MAIN CONTENT
+     ===================================================== -->
+
+<main class="main-content">
+
+
+    <!-- TOPBAR -->
+
+    <header class="topbar">
+
+        <div class="breadcrumb">
+
+            <span class="breadcrumb-icon">
+                ₹
+            </span>
+
+            <strong>
+                Payments
+            </strong>
+
+        </div>
+
+
+        <div class="topbar-right">
+
+            <div class="system-status">
+
+                <span class="status-dot"></span>
+
+                SYSTEM OPERATIONAL
+
+            </div>
+
+
+            <div class="profile-avatar"
+                 id="topProfileAvatar">
+
+                U
+
+            </div>
+
+        </div>
+
+    </header>
+
+
+    <!-- =================================================
+         PAYMENT CONTENT
+         ================================================= -->
+
+    <section class="dashboard-container">
+
+
+        <!-- PAGE HEADING -->
+
+        <section class="welcome-section">
+
+            <div>
+
+                <div class="greeting">
+                    PAYMENT MANAGEMENT
+                </div>
+
+
+                <h1>
+                    All Payments
+                </h1>
+
+
+                <p class="subtitle">
+                    View and monitor payment transactions
+                    across the procurement system.
+                </p>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             PAYMENT LIST
+             ================================================= -->
+
+        <section>
+
+            <div id="paymentContainer">
+
+                <p>
+                    Loading payments...
+                </p>
+
+            </div>
+
+        </section>
+
+
+    </section>
+
+</main>
+
+
+<!-- =====================================================
+     MANAGER JAVASCRIPT
+     ===================================================== -->
+
+<script src="../js/manager/manager-payments.js"></script>
+
+
+</body>
+
+</html>

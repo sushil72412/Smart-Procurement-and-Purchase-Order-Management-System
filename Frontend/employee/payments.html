@@ -1,0 +1,854 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>EPMS - Payments</title>
+
+    <link rel="stylesheet"
+          href="../css/dashboard.css">
+
+    <link rel="stylesheet"
+          href="../css/payments.css">
+
+</head>
+
+
+<body>
+
+
+<!-- =====================================================
+     SIDEBAR
+     ===================================================== -->
+
+<aside class="sidebar">
+
+    <div class="logo">
+
+        <div class="logo-icon">
+            EP
+        </div>
+
+        <div>
+            <h2>EPMS</h2>
+            <span>Enterprise Procurement</span>
+        </div>
+
+    </div>
+
+
+    <!-- MAIN MENU -->
+
+    <div class="sidebar-section">
+
+        <div class="section-title">
+            MAIN MENU
+        </div>
+
+
+        <a href="dashboard.html"
+           class="nav-item">
+
+            <span>▦</span>
+            <span>Overview</span>
+
+        </a>
+
+
+        <a href="purchase-requests.html"
+           class="nav-item">
+
+            <span>▤</span>
+            <span>Purchase Requests</span>
+
+        </a>
+
+
+        <a href="products.html"
+           class="nav-item">
+
+            <span>▤</span>
+            <span>Products</span>
+
+        </a>
+
+
+        <a href="deliveries.html"
+           class="nav-item">
+
+            <span>▱</span>
+            <span>Deliveries</span>
+
+        </a>
+
+
+        <a href="payments.html"
+           class="nav-item active">
+
+            <span>₹</span>
+            <span>Payments</span>
+
+        </a>
+
+
+        <a href="ratings.html"
+           class="nav-item">
+
+            <span>★</span>
+            <span>Ratings</span>
+
+        </a>
+
+    </div>
+
+
+    <!-- SYSTEM -->
+
+    <div class="sidebar-section">
+
+        <div class="section-title">
+            SYSTEM
+        </div>
+
+
+        <a href="settings.html"
+           class="nav-item">
+
+            <span>⚙</span>
+            <span>Settings</span>
+
+        </a>
+
+
+        <a href="support.html"
+           class="nav-item">
+
+            <span>?</span>
+            <span>Support</span>
+
+        </a>
+
+    </div>
+
+
+    <!-- SIDEBAR BOTTOM -->
+
+    <div class="sidebar-bottom">
+
+        <div class="user-card">
+
+            <div class="user-avatar"
+                 id="userAvatar">
+
+                US
+
+            </div>
+
+
+            <div class="user-info">
+
+                <strong id="userEmail">
+                    User
+                </strong>
+
+                <small id="userRole">
+                    EMPLOYEE
+                </small>
+
+            </div>
+
+        </div>
+
+
+        <button type="button"
+                id="logoutButton"
+                class="logout-btn">
+
+            <span>↪</span>
+            <span>Sign out</span>
+
+        </button>
+
+    </div>
+
+</aside>
+
+
+<!-- =====================================================
+     MAIN CONTENT
+     ===================================================== -->
+
+<main class="main-content">
+
+
+    <!-- TOPBAR -->
+
+    <header class="topbar">
+
+        <div class="breadcrumb">
+
+            <span class="breadcrumb-icon">
+                /
+            </span>
+
+            <strong>
+                Payments
+            </strong>
+
+        </div>
+
+
+        <div class="topbar-right">
+
+            <div class="system-status">
+
+                <span class="status-dot"></span>
+
+                SYSTEM OPERATIONAL
+
+            </div>
+
+
+            <div class="profile-avatar"
+                 id="topProfileAvatar">
+
+                US
+
+            </div>
+
+        </div>
+
+    </header>
+
+
+
+    <!-- PAYMENT CONTENT -->
+
+    <section class="dashboard-container">
+
+
+        <section class="welcome-section">
+
+            <div>
+
+                <div class="greeting">
+                    EMPLOYEE PAYMENTS
+                </div>
+
+                <h1>
+                    Payment Management
+                </h1>
+
+                <p class="subtitle">
+                    View your approved purchase requests
+                    and securely complete payments.
+                </p>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- PAYMENT CARDS -->
+
+        <section>
+
+            <div id="paymentContainer">
+
+                <p>
+                    Loading payments...
+                </p>
+
+            </div>
+
+        </section>
+
+
+    </section>
+
+</main>
+
+
+
+<!-- =====================================================
+     PAYMENT CHECKOUT MODAL
+     ===================================================== -->
+
+<div id="paymentModal"
+     class="payment-modal-overlay">
+
+
+    <div class="payment-modal">
+
+
+        <!-- =================================================
+             PAYMENT HEADER
+             ================================================= -->
+
+        <div class="payment-modal-header">
+
+            <div>
+
+                <div class="payment-modal-label">
+                    SECURE CHECKOUT
+                </div>
+
+                <h2>
+                    Make Payment
+                </h2>
+
+                <p id="paymentRequestInfo">
+                    Purchase Request
+                </p>
+
+            </div>
+
+
+            <button type="button"
+                    class="payment-close-button"
+                    onclick="closePaymentModal()">
+
+                ×
+
+            </button>
+
+        </div>
+
+
+
+        <!-- =================================================
+             PAYMENT BODY
+             ================================================= -->
+
+        <div class="payment-modal-body">
+
+
+            <!-- =============================================
+                 LEFT — PAYMENT METHODS
+                 ============================================= -->
+
+            <div class="payment-method-section">
+
+
+                <h3>
+                    Payment Method
+                </h3>
+
+
+                <p class="payment-method-subtitle">
+                    Choose how you want to pay
+                </p>
+
+
+
+                <!-- UPI -->
+
+                <button type="button"
+                        class="payment-method-option active"
+                        data-method="UPI"
+                        onclick="selectPaymentMethod('UPI')">
+
+                    <span class="payment-method-icon">
+                        U
+                    </span>
+
+                    <span class="payment-method-text">
+
+                        <strong>
+                            UPI
+                        </strong>
+
+                        <small>
+                            Pay using UPI / QR code
+                        </small>
+
+                    </span>
+
+                    <span class="payment-method-check">
+                        ✓
+                    </span>
+
+                </button>
+
+
+
+                <!-- CARD -->
+
+                <button type="button"
+                        class="payment-method-option"
+                        data-method="CARD"
+                        onclick="selectPaymentMethod('CARD')">
+
+                    <span class="payment-method-icon">
+                        💳
+                    </span>
+
+                    <span class="payment-method-text">
+
+                        <strong>
+                            Credit / Debit Card
+                        </strong>
+
+                        <small>
+                            Visa, Mastercard, RuPay
+                        </small>
+
+                    </span>
+
+                    <span class="payment-method-check">
+                        ✓
+                    </span>
+
+                </button>
+
+
+
+                <!-- NET BANKING -->
+
+                <button type="button"
+                        class="payment-method-option"
+                        data-method="NET_BANKING"
+                        onclick="selectPaymentMethod('NET_BANKING')">
+
+                    <span class="payment-method-icon">
+                        🏦
+                    </span>
+
+                    <span class="payment-method-text">
+
+                        <strong>
+                            Net Banking
+                        </strong>
+
+                        <small>
+                            Pay using your bank account
+                        </small>
+
+                    </span>
+
+                    <span class="payment-method-check">
+                        ✓
+                    </span>
+
+                </button>
+
+
+
+                <!-- CASH -->
+
+                <button type="button"
+                        class="payment-method-option"
+                        data-method="CASH"
+                        onclick="selectPaymentMethod('CASH')">
+
+                    <span class="payment-method-icon">
+                        ₹
+                    </span>
+
+                    <span class="payment-method-text">
+
+                        <strong>
+                            Cash
+                        </strong>
+
+                        <small>
+                            Pay directly to the supplier
+                        </small>
+
+                    </span>
+
+                    <span class="payment-method-check">
+                        ✓
+                    </span>
+
+                </button>
+
+
+            </div>
+
+
+
+            <!-- =============================================
+                 RIGHT — PAYMENT DETAILS
+                 ============================================= -->
+
+            <div class="payment-details-section">
+
+
+                <!-- =========================================
+                     UPI PAYMENT
+                     ========================================= -->
+
+                <div id="upiPaymentPanel"
+                     class="payment-detail-panel active">
+
+
+                    <h3>
+                        Pay with UPI
+                    </h3>
+
+
+                    <p class="payment-detail-description">
+                        Enter your UPI ID or scan the QR code
+                        using your UPI app.
+                    </p>
+
+
+                    <label for="upiId">
+                        UPI ID
+                    </label>
+
+
+                    <input type="text"
+                           id="upiId"
+                           class="payment-input"
+                           placeholder="example@upi">
+
+
+                    <div class="upi-divider">
+
+                        <span>
+                            OR
+                        </span>
+
+                    </div>
+
+
+                    <div class="qr-payment-container">
+
+
+                        <div class="qr-code"
+                             id="qrCode">
+
+                            <div class="qr-placeholder">
+                                QR
+                            </div>
+
+                        </div>
+
+
+                        <div class="qr-information">
+
+                            <strong>
+                                Scan to Pay
+                            </strong>
+
+                            <p>
+                                Open any UPI app and scan
+                                this QR code to continue.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+
+
+                <!-- =========================================
+                     CARD PAYMENT
+                     ========================================= -->
+
+                <div id="cardPaymentPanel"
+                     class="payment-detail-panel">
+
+
+                    <h3>
+                        Card Payment
+                    </h3>
+
+
+                    <p class="payment-detail-description">
+                        Enter your card details securely.
+                    </p>
+
+
+                    <label for="cardNumber">
+                        Card Number
+                    </label>
+
+                    <input type="text"
+                           id="cardNumber"
+                           class="payment-input"
+                           maxlength="19"
+                           placeholder="1234 5678 9012 3456">
+
+
+                    <label for="cardName">
+                        Cardholder Name
+                    </label>
+
+                    <input type="text"
+                           id="cardName"
+                           class="payment-input"
+                           placeholder="Name on card">
+
+
+                    <div class="card-row">
+
+                        <div>
+
+                            <label for="cardExpiry">
+                                Expiry
+                            </label>
+
+                            <input type="text"
+                                   id="cardExpiry"
+                                   class="payment-input"
+                                   maxlength="5"
+                                   placeholder="MM/YY">
+
+                        </div>
+
+
+                        <div>
+
+                            <label for="cardCvv">
+                                CVV
+                            </label>
+
+                            <input type="password"
+                                   id="cardCvv"
+                                   class="payment-input"
+                                   maxlength="3"
+                                   placeholder="•••">
+
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+
+
+                <!-- =========================================
+                     NET BANKING
+                     ========================================= -->
+
+                <div id="netBankingPaymentPanel"
+                     class="payment-detail-panel">
+
+
+                    <h3>
+                        Net Banking
+                    </h3>
+
+
+                    <p class="payment-detail-description">
+                        Select your bank to continue.
+                    </p>
+
+
+                    <label for="bankName">
+                        Select Bank
+                    </label>
+
+
+                    <select id="bankName"
+                            class="payment-input">
+
+                        <option value="">
+                            Select your bank
+                        </option>
+
+                        <option value="SBI">
+                            State Bank of India
+                        </option>
+
+                        <option value="HDFC">
+                            HDFC Bank
+                        </option>
+
+                        <option value="ICICI">
+                            ICICI Bank
+                        </option>
+
+                        <option value="AXIS">
+                            Axis Bank
+                        </option>
+
+                        <option value="PNB">
+                            Punjab National Bank
+                        </option>
+
+                        <option value="OTHER">
+                            Other Bank
+                        </option>
+
+                    </select>
+
+
+                </div>
+
+
+
+                <!-- =========================================
+                     CASH PAYMENT
+                     ========================================= -->
+
+                <div id="cashPaymentPanel"
+                     class="payment-detail-panel">
+
+
+                    <h3>
+                        Cash Payment
+                    </h3>
+
+
+                    <div class="cash-notice">
+
+                        <div class="cash-notice-icon">
+                            ₹
+                        </div>
+
+                        <div>
+
+                            <strong>
+                                Cash payment
+                            </strong>
+
+                            <p>
+                                You can select cash payment
+                                if the payment will be completed
+                                directly with the supplier.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <label class="cash-confirmation">
+
+                        <input type="checkbox"
+                               id="cashConfirmation">
+
+                        <span>
+                            I confirm that I will complete
+                            the cash payment with the supplier.
+                        </span>
+
+                    </label>
+
+
+                </div>
+
+
+            </div>
+
+
+
+            <!-- =============================================
+                 PAYMENT SUMMARY
+                 ============================================= -->
+
+            <div class="payment-summary-section">
+
+
+                <div class="summary-header">
+
+                    <span>
+                        ORDER SUMMARY
+                    </span>
+
+                </div>
+
+
+                <div class="summary-request">
+
+                    <span>
+                        Purchase Request
+                    </span>
+
+                    <strong id="summaryRequestId">
+                        #--
+                    </strong>
+
+                </div>
+
+
+                <div class="summary-divider"></div>
+
+
+                <div class="summary-amount-row">
+
+                    <span>
+                        Amount
+                    </span>
+
+                    <strong id="summaryAmount">
+                        ₹0
+                    </strong>
+
+                </div>
+
+
+                <div class="secure-payment-note">
+
+                    <span>
+                        🔒
+                    </span>
+
+                    <span>
+                        Secure payment processing
+                    </span>
+
+                </div>
+
+
+                <button type="button"
+                        id="confirmPaymentButton"
+                        class="confirm-payment-button"
+                        onclick="submitPayment()">
+
+                    <span>
+                        Pay Securely
+                    </span>
+
+                    <span>
+                        →
+                    </span>
+
+                </button>
+
+
+                <button type="button"
+                        class="cancel-payment-button"
+                        onclick="closePaymentModal()">
+
+                    Cancel
+
+                </button>
+
+
+                <p id="paymentMessage"
+                   class="payment-message">
+                </p>
+
+
+            </div>
+
+
+        </div>
+
+
+    </div>
+
+</div>
+
+
+
+<script src="../js/employee/payments.js"></script>
+
+</body>
+
+</html>

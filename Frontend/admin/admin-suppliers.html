@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Admin Suppliers - EPMS</title>
+
+    <link rel="stylesheet" href="../css/admin-dashboard.css">
+</head>
+
+<body>
+
+<div class="dashboard-container">
+
+    <!-- =====================================================
+         SIDEBAR
+         ===================================================== -->
+
+    <aside class="sidebar">
+
+        <div class="logo">
+            <h1>EPMS</h1>
+            <span>Procurement System</span>
+        </div>
+
+        <nav class="sidebar-nav">
+
+            <a href="admin-dashboard.html"
+               class="nav-item">
+                <span>▦</span>
+                Dashboard
+            </a>
+
+            <a href="admin-users.html"
+               class="nav-item">
+                <span>👥</span>
+                Users
+            </a>
+
+            <a href="admin-products.html"
+               class="nav-item">
+                <span>📦</span>
+                Products
+            </a>
+
+            <a href="admin-purchase-requests.html"
+               class="nav-item">
+                <span>📋</span>
+                Purchase Requests
+            </a>
+
+            <a href="admin-suppliers.html"
+               class="nav-item active">
+                <span>🏢</span>
+                Suppliers
+            </a>
+
+            <a href="admin-deliveries.html"
+               class="nav-item">
+                <span>🚚</span>
+                Deliveries
+            </a>
+
+            <a href="admin-payments.html"
+               class="nav-item">
+                <span>💳</span>
+                Payments
+            </a>
+
+            <a href="admin-reports.html"
+               class="nav-item">
+                <span>📊</span>
+                Reports
+            </a>
+
+        </nav>
+
+
+        <!-- ADMIN PROFILE -->
+
+        <div class="user-card">
+
+            <div class="user-avatar"
+                 id="adminAvatar">
+                A
+            </div>
+
+            <div class="user-info">
+
+                <strong id="adminName">
+                    Administrator
+                </strong>
+
+                <span id="adminEmail">
+                    admin@epms.com
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <!-- LOGOUT -->
+
+        <button id="logoutBtn"
+                class="logout-btn">
+            🚪 Logout
+        </button>
+
+    </aside>
+
+
+    <!-- =====================================================
+         MAIN CONTENT
+         ===================================================== -->
+
+    <main class="main-content">
+
+        <!-- TOPBAR -->
+
+        <header class="topbar">
+
+            <div>
+
+                <h2>
+                    Supplier Management
+                </h2>
+
+                <p id="currentStatus">
+                    Manage EPMS suppliers
+                </p>
+
+            </div>
+
+
+            <div class="topbar-right">
+
+                <span class="role-badge">
+                    ADMIN
+                </span>
+
+            </div>
+
+        </header>
+
+
+        <!-- =================================================
+             SUPPLIER MANAGEMENT
+             ================================================= -->
+
+        <section class="content-card suppliers-management"
+                 id="suppliers-management">
+
+            <div class="card-header">
+
+                <div>
+
+                    <h3>
+                        Supplier Management
+                    </h3>
+
+                    <p>
+                        Manage suppliers registered in EPMS
+                    </p>
+
+                </div>
+
+
+                <div class="product-controls">
+
+                    <input
+                        type="text"
+                        id="supplierSearch"
+                        placeholder="Search suppliers..."
+                        class="search-input"
+                    >
+
+
+                    <button
+                        id="refreshSuppliersBtn"
+                        class="refresh-btn">
+
+                        ↻ Refresh
+
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <!-- =================================================
+                 SUPPLIERS TABLE
+                 ================================================= -->
+
+            <div class="table-container">
+
+                <table class="data-table suppliers-table">
+
+                    <thead>
+
+                    <tr>
+
+                        <th>ID</th>
+
+                        <th>Supplier</th>
+
+                        <th>Email</th>
+
+                        <th>Phone</th>
+
+                        <th>Company</th>
+
+                        <th>Status</th>
+
+                        <th>Actions</th>
+
+                    </tr>
+
+                    </thead>
+
+
+                    <tbody id="suppliersTableBody">
+
+                    <tr>
+
+                        <td colspan="7"
+                            class="loading-cell">
+
+                            Loading suppliers...
+
+                        </td>
+
+                    </tr>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </section>
+
+    </main>
+
+</div>
+
+
+<!-- =========================================================
+     JAVASCRIPT
+     ========================================================= -->
+
+<script src="../js/admin/admin-suppliers.js"></script>
+
+</body>
+</html>

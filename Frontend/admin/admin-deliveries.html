@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Admin Deliveries - EPMS</title>
+
+    <link rel="stylesheet" href="../css/admin-dashboard.css">
+</head>
+
+<body>
+
+<div class="dashboard-container">
+
+    <!-- =====================================================
+         SIDEBAR
+         ===================================================== -->
+
+    <aside class="sidebar">
+
+        <div class="logo">
+            <h1>EPMS</h1>
+            <span>Procurement System</span>
+        </div>
+
+        <nav class="sidebar-nav">
+
+            <a href="admin-dashboard.html"
+               class="nav-item">
+                <span>▦</span>
+                Dashboard
+            </a>
+
+            <a href="admin-users.html"
+               class="nav-item">
+                <span>👥</span>
+                Users
+            </a>
+
+            <a href="admin-products.html"
+               class="nav-item">
+                <span>📦</span>
+                Products
+            </a>
+
+            <a href="admin-purchase-requests.html"
+               class="nav-item">
+                <span>📋</span>
+                Purchase Requests
+            </a>
+
+            <a href="admin-suppliers.html"
+               class="nav-item">
+                <span>🏢</span>
+                Suppliers
+            </a>
+
+            <a href="admin-deliveries.html"
+               class="nav-item active">
+                <span>🚚</span>
+                Deliveries
+            </a>
+
+            <a href="admin-payments.html"
+               class="nav-item">
+                <span>💳</span>
+                Payments
+            </a>
+
+            <a href="admin-reports.html"
+               class="nav-item">
+                <span>📊</span>
+                Reports
+            </a>
+
+        </nav>
+
+
+        <!-- ADMIN PROFILE -->
+
+        <div class="user-card">
+
+            <div class="user-avatar"
+                 id="adminAvatar">
+                A
+            </div>
+
+            <div class="user-info">
+
+                <strong id="adminName">
+                    Administrator
+                </strong>
+
+                <span id="adminEmail">
+                    admin@epms.com
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <!-- LOGOUT -->
+
+        <button id="logoutBtn"
+                class="logout-btn">
+            🚪 Logout
+        </button>
+
+    </aside>
+
+
+    <!-- =====================================================
+         MAIN CONTENT
+         ===================================================== -->
+
+    <main class="main-content">
+
+        <!-- TOPBAR -->
+
+        <header class="topbar">
+
+            <div>
+
+                <h2>
+                    Delivery Management
+                </h2>
+
+                <p id="currentStatus">
+                    Manage EPMS deliveries
+                </p>
+
+            </div>
+
+
+            <div class="topbar-right">
+
+                <span class="role-badge">
+                    ADMIN
+                </span>
+
+            </div>
+
+        </header>
+
+
+        <!-- =================================================
+             DELIVERY MANAGEMENT
+             ================================================= -->
+
+        <section class="content-card deliveries-management"
+                 id="deliveries-management">
+
+            <div class="card-header">
+
+                <div>
+
+                    <h3>
+                        Delivery Management
+                    </h3>
+
+                    <p>
+                        Monitor and manage procurement deliveries
+                    </p>
+
+                </div>
+
+
+                <div class="product-controls">
+
+                    <input
+                        type="text"
+                        id="deliverySearch"
+                        placeholder="Search deliveries..."
+                        class="search-input"
+                    >
+
+
+                    <select
+                        id="deliveryStatusFilter"
+                        class="search-input">
+
+                        <option value="ALL">
+                            All Status
+                        </option>
+
+                        <option value="PENDING">
+                            Pending
+                        </option>
+
+                        <option value="IN_TRANSIT">
+                            In Transit
+                        </option>
+
+                        <option value="DELIVERED">
+                            Delivered
+                        </option>
+
+                    </select>
+
+
+                    <button
+                        id="refreshDeliveriesBtn"
+                        class="refresh-btn">
+
+                        ↻ Refresh
+
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <!-- =================================================
+                 DELIVERIES TABLE
+                 ================================================= -->
+
+            <div class="table-container">
+
+                <table class="data-table deliveries-table">
+
+                    <thead>
+
+                    <tr>
+
+                        <th>ID</th>
+
+                        <th>Purchase Request</th>
+
+                        <th>Employee</th>
+
+                        <th>Supplier</th>
+
+                        <th>Tracking Number</th>
+
+                        <th>Status</th>
+
+                        <th>Delivery Date</th>
+
+                    </tr>
+
+                    </thead>
+
+
+                    <tbody id="deliveriesTableBody">
+
+                    <tr>
+
+                        <td colspan="7"
+                            class="loading-cell">
+
+                            Loading deliveries...
+
+                        </td>
+
+                    </tr>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </section>
+
+    </main>
+
+</div>
+
+
+<!-- =========================================================
+     JAVASCRIPT
+     ========================================================= -->
+
+<script src="../js/admin/admin-deliveries.js"></script>
+
+</body>
+</html>

@@ -1500,3 +1500,894 @@ body {
 .reject-btn:hover {
     background: #fff0f0;
 }
+
+
+/* =========================================================
+   REFRESH BUTTON
+   ========================================================= */
+
+.refresh-btn {
+    height: 31px;
+    min-width: 34px;
+    padding: 0 9px;
+
+    border: 1px solid #d9dee5;
+    border-radius: 7px;
+
+    background: #ffffff;
+    color: #526071;
+
+    font-size: 14px;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    transition:
+        background 0.2s ease,
+        color 0.2s ease,
+        border-color 0.2s ease,
+        transform 0.2s ease;
+}
+
+.refresh-btn:hover {
+    background: #f3f7f6;
+    color: #269b7b;
+    border-color: #b9ddd2;
+    transform: translateY(-1px);
+}
+
+.refresh-btn:active {
+    transform: translateY(0);
+}
+
+
+/* =========================================================
+   LOADING STATE
+   ========================================================= */
+
+.loading-state {
+    min-height: 250px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    color: #778398;
+
+    font-size: 12px;
+    font-weight: 500;
+
+    background: #ffffff;
+}
+
+
+/* =========================================================
+   STATUS BADGES
+   JS GENERATES:
+   status-pending / status-approved / status-rejected
+   ========================================================= */
+
+.status-pending {
+    background: #fff3df;
+    color: #c77d13;
+}
+
+.status-approved {
+    background: #e8f6f1;
+    color: #218565;
+}
+
+.status-rejected {
+    background: #fbeceb;
+    color: #d1574f;
+}
+
+
+/* =========================================================
+   UNKNOWN / OTHER STATUS
+   ========================================================= */
+
+.status-unknown {
+    background: #f1f3f5;
+    color: #68758a;
+}
+
+
+/* =========================================================
+   REQUEST TABLE IMPROVEMENTS
+   ========================================================= */
+
+.request-table td:first-child {
+    font-weight: 600;
+}
+
+.request-table td:nth-child(2) {
+    max-width: 150px;
+
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.request-table td:nth-child(3) {
+    max-width: 180px;
+
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+
+/* =========================================================
+   ACTION BUTTONS
+   ========================================================= */
+
+.action-buttons {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex-wrap: wrap;
+}
+
+.view-btn,
+.approve-btn,
+.reject-btn {
+    min-width: 52px;
+    height: 29px;
+
+    padding: 0 9px;
+
+    border-radius: 6px;
+
+    font-size: 10px;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition:
+        background 0.2s ease,
+        border-color 0.2s ease,
+        color 0.2s ease,
+        transform 0.2s ease;
+}
+
+.view-btn {
+    border: 1px solid #d8dee6;
+    background: #ffffff;
+    color: #536074;
+}
+
+.view-btn:hover {
+    background: #f5f7f9;
+    border-color: #cbd3dd;
+    transform: translateY(-1px);
+}
+
+.approve-btn {
+    border: 1px solid #b9e1d4;
+    background: #eaf8f3;
+    color: #16805f;
+}
+
+.approve-btn:hover {
+    background: #d9f2e9;
+    border-color: #9fd5c5;
+    transform: translateY(-1px);
+}
+
+.reject-btn {
+    border: 1px solid #efc5c2;
+    background: #fff0ef;
+    color: #d64545;
+}
+
+.reject-btn:hover {
+    background: #fbe2e0;
+    border-color: #e6aaa6;
+    transform: translateY(-1px);
+}
+
+
+/* =========================================================
+   SEARCH + FILTER CONTROLS
+   ========================================================= */
+
+.request-tools {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+}
+
+.request-tools input,
+.request-tools select {
+    height: 34px;
+
+    border: 1px solid #d9dfe7;
+    border-radius: 7px;
+
+    background: #ffffff;
+    color: #455166;
+
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 11px;
+
+    outline: none;
+
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.request-tools input {
+    width: 160px;
+    padding: 0 11px;
+}
+
+.request-tools select {
+    width: 105px;
+    padding: 0 8px;
+    cursor: pointer;
+}
+
+.request-tools input::placeholder {
+    color: #a0a9b6;
+}
+
+.request-tools input:focus,
+.request-tools select:focus {
+    border-color: #269b7b;
+    box-shadow: 0 0 0 3px rgba(38, 155, 123, 0.08);
+}
+
+
+/* =========================================================
+   REQUEST SECTION HEADER
+   ========================================================= */
+
+.section-header {
+    min-height: 82px;
+}
+
+.section-header h2 {
+    font-size: 16px;
+    font-weight: 700;
+}
+
+.section-header p {
+    font-size: 10px;
+}
+
+
+/* =========================================================
+   SUMMARY CARD INTERACTION
+   ========================================================= */
+
+.summary-card {
+    cursor: default;
+}
+
+.summary-card h2 {
+    font-size: 27px;
+    font-weight: 700;
+}
+
+.card-description {
+    line-height: 1.4;
+}
+
+
+/* =========================================================
+   APPROVAL PULSE
+   ========================================================= */
+
+.pulse-card {
+    position: relative;
+    overflow: hidden;
+}
+
+.pulse-card::after {
+    content: "";
+
+    position: absolute;
+
+    width: 120px;
+    height: 120px;
+
+    right: -55px;
+    bottom: -55px;
+
+    border-radius: 50%;
+
+    background: rgba(255, 255, 255, 0.035);
+
+    pointer-events: none;
+}
+
+
+/* =========================================================
+   PROCUREMENT STATUS
+   ========================================================= */
+
+.status-card {
+    box-shadow: 0 2px 5px rgba(20, 30, 50, 0.03);
+}
+
+.status-card:hover {
+    box-shadow: 0 7px 20px rgba(20, 30, 50, 0.06);
+}
+
+
+/* =========================================================
+   TABLE SCROLLBAR
+   ========================================================= */
+
+.request-table-wrapper {
+    scrollbar-width: thin;
+    scrollbar-color: #cbd3dd #f5f6f8;
+}
+
+.request-table-wrapper::-webkit-scrollbar {
+    height: 7px;
+}
+
+.request-table-wrapper::-webkit-scrollbar-track {
+    background: #f5f6f8;
+}
+
+.request-table-wrapper::-webkit-scrollbar-thumb {
+    background: #cbd3dd;
+    border-radius: 10px;
+}
+
+
+/* =========================================================
+   MOBILE IMPROVEMENTS
+   ========================================================= */
+
+@media (max-width: 650px) {
+
+    .request-tools {
+        display: grid;
+        grid-template-columns: 1fr auto auto;
+        width: 100%;
+    }
+
+    .request-tools input {
+        width: 100%;
+    }
+
+    .request-tools select {
+        width: 100px;
+    }
+
+    .refresh-btn {
+        width: 34px;
+    }
+
+    .action-buttons {
+        flex-wrap: nowrap;
+    }
+
+}
+
+/* =========================================================
+   STEP 2A-2 — PURCHASE REQUEST DETAILS MODAL
+   ========================================================= */
+
+.request-modal-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 2000;
+
+    display: none;
+    align-items: center;
+    justify-content: center;
+
+    padding: 25px;
+
+    background: rgba(15, 25, 40, 0.55);
+
+    backdrop-filter: blur(2px);
+}
+
+
+/* =========================================================
+   MODAL
+   ========================================================= */
+
+.request-modal {
+    width: 100%;
+    max-width: 650px;
+    max-height: 90vh;
+
+    overflow-y: auto;
+
+    background: #ffffff;
+
+    border: 1px solid #e1e5ea;
+    border-radius: 14px;
+
+    box-shadow: 0 20px 55px rgba(20, 30, 50, 0.22);
+
+    animation: requestModalOpen 0.2s ease;
+}
+
+
+@keyframes requestModalOpen {
+
+    from {
+        opacity: 0;
+        transform: translateY(10px) scale(0.98);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+
+}
+
+
+/* =========================================================
+   MODAL HEADER
+   ========================================================= */
+
+.request-modal-header {
+    min-height: 90px;
+
+    padding: 20px 22px;
+
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+
+    gap: 20px;
+
+    border-bottom: 1px solid #e8ebef;
+}
+
+
+.request-modal-label {
+    display: block;
+
+    margin-bottom: 6px;
+
+    color: #269b7b;
+
+    font-size: 9px;
+    font-weight: 700;
+
+    letter-spacing: 1.3px;
+}
+
+
+.request-modal-header h2 {
+    color: #172033;
+
+    font-size: 20px;
+    font-weight: 700;
+}
+
+
+.request-modal-header p {
+    margin-top: 5px;
+
+    color: #8a94a4;
+
+    font-size: 11px;
+}
+
+
+/* =========================================================
+   CLOSE BUTTON
+   ========================================================= */
+
+.request-modal-close {
+    width: 32px;
+    height: 32px;
+
+    flex-shrink: 0;
+
+    border: 1px solid #dce1e7;
+    border-radius: 7px;
+
+    background: #ffffff;
+    color: #64748b;
+
+    font-size: 21px;
+    line-height: 1;
+
+    cursor: pointer;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    transition:
+        background 0.2s ease,
+        color 0.2s ease,
+        border-color 0.2s ease;
+}
+
+
+.request-modal-close:hover {
+    background: #f5f7f9;
+    border-color: #cbd3dd;
+    color: #172033;
+}
+
+
+/* =========================================================
+   MODAL BODY
+   ========================================================= */
+
+.request-modal-body {
+    padding: 22px;
+}
+
+
+/* =========================================================
+   DETAILS SECTION
+   ========================================================= */
+
+.details-section {
+    margin-bottom: 22px;
+}
+
+
+.details-section:last-child {
+    margin-bottom: 0;
+}
+
+
+.details-section-title {
+    margin-bottom: 12px;
+
+    color: #778398;
+
+    font-size: 9px;
+    font-weight: 700;
+
+    letter-spacing: 1.2px;
+}
+
+
+/* =========================================================
+   REQUEST INFORMATION
+   ========================================================= */
+
+.details-info-grid {
+    display: grid;
+
+    grid-template-columns: 1fr 1fr;
+
+    gap: 12px;
+}
+
+
+.details-info-item {
+    min-height: 68px;
+
+    padding: 13px 15px;
+
+    background: #f8f9fa;
+
+    border: 1px solid #e7eaee;
+    border-radius: 9px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+
+.details-info-item > span:first-child {
+    margin-bottom: 6px;
+
+    color: #8993a3;
+
+    font-size: 9px;
+}
+
+
+.details-info-item > strong {
+    color: #263247;
+
+    font-size: 13px;
+}
+
+
+/* =========================================================
+   PRODUCT LIST
+   ========================================================= */
+
+.details-products {
+    border: 1px solid #e4e8ed;
+
+    border-radius: 9px;
+
+    overflow: hidden;
+}
+
+
+.details-product-row {
+    min-height: 58px;
+
+    padding: 12px 15px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 15px;
+
+    border-bottom: 1px solid #edf0f3;
+}
+
+
+.details-product-row:last-child {
+    border-bottom: none;
+}
+
+
+.details-product-info {
+    min-width: 0;
+
+    display: flex;
+    align-items: center;
+
+    gap: 11px;
+}
+
+
+.details-product-icon {
+    width: 34px;
+    height: 34px;
+
+    flex-shrink: 0;
+
+    border-radius: 8px;
+
+    background: #e9f6f2;
+    color: #269b7b;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 15px;
+}
+
+
+.details-product-name {
+    min-width: 0;
+
+    color: #344054;
+
+    font-size: 12px;
+    font-weight: 600;
+
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+
+.details-product-id {
+    margin-top: 3px;
+
+    color: #9aa3b1;
+
+    font-size: 9px;
+}
+
+
+.details-product-quantity {
+    flex-shrink: 0;
+
+    padding: 5px 9px;
+
+    border-radius: 12px;
+
+    background: #f1f5f4;
+
+    color: #218565;
+
+    font-size: 10px;
+    font-weight: 700;
+}
+
+
+/* =========================================================
+   DELIVERY INFORMATION
+   ========================================================= */
+
+.delivery-details-card {
+    padding: 15px;
+
+    background: #f8f9fa;
+
+    border: 1px solid #e5e9ee;
+    border-radius: 9px;
+}
+
+
+.delivery-recipient {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 15px;
+
+    margin-bottom: 10px;
+}
+
+
+.delivery-recipient strong {
+    color: #263247;
+
+    font-size: 13px;
+}
+
+
+.delivery-recipient span {
+    color: #68758a;
+
+    font-size: 11px;
+}
+
+
+.delivery-details-card p {
+    margin-top: 4px;
+
+    color: #68758a;
+
+    font-size: 11px;
+
+    line-height: 1.5;
+}
+
+
+/* =========================================================
+   ACTION AREA
+   ========================================================= */
+
+.request-details-actions {
+    padding-top: 18px;
+
+    border-top: 1px solid #e8ebef;
+
+    display: flex;
+    justify-content: flex-end;
+
+    gap: 9px;
+}
+
+
+.details-approve-btn,
+.details-reject-btn {
+    min-height: 36px;
+
+    padding: 0 15px;
+
+    border-radius: 7px;
+
+    font-size: 11px;
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition:
+        background 0.2s ease,
+        border-color 0.2s ease,
+        transform 0.2s ease;
+}
+
+
+.details-approve-btn {
+    border: 1px solid #b9e1d4;
+
+    background: #eaf8f3;
+
+    color: #16805f;
+}
+
+
+.details-approve-btn:hover {
+    background: #d9f2e9;
+    border-color: #9fd5c5;
+
+    transform: translateY(-1px);
+}
+
+
+.details-reject-btn {
+    border: 1px solid #efc5c2;
+
+    background: #fff0ef;
+
+    color: #d64545;
+}
+
+
+.details-reject-btn:hover {
+    background: #fbe2e0;
+    border-color: #e6aaa6;
+
+    transform: translateY(-1px);
+}
+
+
+/* =========================================================
+   MODAL SCROLLBAR
+   ========================================================= */
+
+.request-modal {
+    scrollbar-width: thin;
+    scrollbar-color: #cbd3dd #f5f6f8;
+}
+
+
+.request-modal::-webkit-scrollbar {
+    width: 7px;
+}
+
+
+.request-modal::-webkit-scrollbar-track {
+    background: #f5f6f8;
+}
+
+
+.request-modal::-webkit-scrollbar-thumb {
+    background: #cbd3dd;
+    border-radius: 10px;
+}
+
+
+/* =========================================================
+   MOBILE MODAL
+   ========================================================= */
+
+@media (max-width: 650px) {
+
+    .request-modal-overlay {
+        padding: 12px;
+    }
+
+    .request-modal {
+        max-height: 94vh;
+        border-radius: 11px;
+    }
+
+    .request-modal-header {
+        padding: 17px;
+    }
+
+    .request-modal-body {
+        padding: 17px;
+    }
+
+    .details-info-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .request-details-actions {
+        flex-direction: column;
+    }
+
+    .details-approve-btn,
+    .details-reject-btn {
+        width: 100%;
+    }
+
+    .delivery-recipient {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 4px;
+    }
+
+}
